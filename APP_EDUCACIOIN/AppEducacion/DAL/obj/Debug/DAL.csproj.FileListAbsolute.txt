@@ -1,0 +1,118 @@
+c:\users\wlopez\documents\visual studio 2012\Projects\AppEducacion\DAL\bin\Debug\DAL.dll
+c:\users\wlopez\documents\visual studio 2012\Projects\AppEducacion\DAL\bin\Debug\DAL.pdb
+c:\users\wlopez\documents\visual studio 2012\Projects\AppEducacion\DAL\obj\Debug\DAL.dll
+c:\users\wlopez\documents\visual studio 2012\Projects\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\Projects\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\wlopez\Documents\Visual Studio 2012\Projects\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\wlopez\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\ingdavid\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\ingdavid\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\ingdavid\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\ingdavid\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\ingdavid\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\ingdavid\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\ingdavid\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\ingdavid\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\ingdavid\Desktop\AppEducacion 2\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\ingdavid\Desktop\AppEducacion 2\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\ingdavid\Desktop\AppEducacion 2\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\ingdavid\Desktop\AppEducacion 2\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\ingdavid\Desktop\AppEducacion 2\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\ingdavid\Desktop\AppEducacion 2\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\ingdavid\Desktop\AppEducacion 2\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\ingdavid\Desktop\AppEducacion 2\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\wlopez\Downloads\AppEducacion_3-2016-02-04\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\wlopez\Downloads\AppEducacion_3-2016-02-04\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\wlopez\Downloads\AppEducacion_3-2016-02-04\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\wlopez\Downloads\AppEducacion_3-2016-02-04\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\wlopez\Downloads\AppEducacion_3-2016-02-04\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\wlopez\Downloads\AppEducacion_3-2016-02-04\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\wlopez\Downloads\AppEducacion_3-2016-02-04\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\wlopez\Downloads\AppEducacion_3-2016-02-04\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\ingdavid\Documents\ISEI\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\ingdavid\Documents\ISEI\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\ingdavid\Documents\ISEI\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\ingdavid\Documents\ISEI\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\ingdavid\Documents\ISEI\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\ingdavid\Documents\ISEI\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\ingdavid\Documents\ISEI\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\ingdavid\Documents\ISEI\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\ultimos cambios\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\ultimos cambios\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\ultimos cambios\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\ultimos cambios\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\ultimos cambios\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\ultimos cambios\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\ultimos cambios\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\ultimos cambios\AppEducacion\DAL\obj\Debug\DAL.pdb
+C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\DAL\bin\Debug\DAL.dll
+C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\DAL\bin\Debug\DAL.pdb
+C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\DAL\bin\Debug\BLL.dll
+C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\DAL\bin\Debug\MySql.Data.dll
+C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\DAL\bin\Debug\BLL.pdb
+C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\DAL\obj\Debug\DAL.dll
+C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\DAL\obj\Debug\DAL.pdb

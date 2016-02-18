@@ -1,0 +1,33 @@
+c:\users\wlopez\documents\visual studio 2012\Projects\AppEducacion\BLL\bin\Debug\BLL.dll
+c:\users\wlopez\documents\visual studio 2012\Projects\AppEducacion\BLL\bin\Debug\BLL.pdb
+c:\users\wlopez\documents\visual studio 2012\Projects\AppEducacion\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+c:\users\wlopez\documents\visual studio 2012\Projects\AppEducacion\BLL\obj\Debug\BLL.dll
+c:\users\wlopez\documents\visual studio 2012\Projects\AppEducacion\BLL\obj\Debug\BLL.pdb
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\BLL\bin\Debug\BLL.dll
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\BLL\bin\Debug\BLL.pdb
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\BLL\obj\Debug\BLL.dll
+C:\Users\davisito\Documents\Visual Studio 2012\Projects\AppEducacion\BLL\obj\Debug\BLL.pdb
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\BLL\bin\Debug\BLL.dll
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\BLL\bin\Debug\BLL.pdb
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\BLL\obj\Debug\BLL.dll
+C:\Users\ingdavid\Documents\Visual Studio 2012\Projects\AppEducacion\AppEducacion\AppEducacion\BLL\obj\Debug\BLL.pdb
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\BLL\bin\Debug\BLL.dll
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\BLL\bin\Debug\BLL.pdb
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\BLL\obj\Debug\BLL.dll
+C:\Users\wlopez\Desktop\AppEducacion\AppEducacion\AppEducacion\AppEducacion\BLL\obj\Debug\BLL.pdb
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\BLL\bin\Debug\BLL.dll
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\BLL\bin\Debug\BLL.pdb
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\BLL\obj\Debug\BLL.dll
+C:\Users\wlopez\Desktop\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\BLL\obj\Debug\BLL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\BLL\bin\Debug\BLL.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\BLL\bin\Debug\BLL.pdb
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\BLL\obj\Debug\BLL.dll
+C:\Users\wlopez\Documents\Visual Studio 2012\COLEGIO\AppEducacion 3\AppEducacion\AppEducacion\AppEducacion\BLL\obj\Debug\BLL.pdb
+C:\ultimos cambios\AppEducacion\BLL\bin\Debug\BLL.dll
+C:\ultimos cambios\AppEducacion\BLL\bin\Debug\BLL.pdb
+C:\ultimos cambios\AppEducacion\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\ultimos cambios\AppEducacion\BLL\obj\Debug\BLL.dll
+C:\ultimos cambios\AppEducacion\BLL\obj\Debug\BLL.pdb

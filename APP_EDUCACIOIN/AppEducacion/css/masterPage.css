@@ -1,0 +1,22 @@
+﻿body {
+}
+
+header {
+    font-family:Arial;
+    background-color:red;
+    height:75px;
+    color:yellow;
+    text-align:center;
+}
+
+footer {
+    background-color:blue;
+    height:50px;
+    color:yellow;
+    text-align:center;
+}
+
+ContentPlaceHolder {
+    background-color:plum;
+    height:300px;
+}

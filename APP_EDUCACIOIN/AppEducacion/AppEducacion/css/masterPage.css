@@ -1,0 +1,31 @@
+﻿body {
+    background-color:#C8D5B9;
+}
+
+
+header {
+    font-family:Arial;
+    background-color:#68B0AB;
+    height:75px;
+    color:white;
+    text-align:center;    
+}
+
+footer {
+    background-color:#4A7C59;
+    height:50px;
+    color:white;
+    text-align:center;
+    margin:20px 10px;
+    padding:10px 10px;
+}
+
+#ContentPlaceHolder {
+    
+}
+
+#cuerpoMP {
+    /*background-color:plum;*/
+    height:800px;
+
+}

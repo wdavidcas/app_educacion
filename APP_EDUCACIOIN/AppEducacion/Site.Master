@@ -1,0 +1,113 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="AppEducacion.Site" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Educaci&oacute;n</title>
+    
+
+    <!--librerias externas-->
+    
+    <script src="frameworks/jquery/jquery-2.1.4.min.js"></script>
+    <script src="frameworks/jqueryui/external/jquery/jquery.js"></script>
+     <link href="frameworks/jqueryui/jquery-ui.css" rel="stylesheet" />
+    <script src="frameworks/jqueryui/jquery-ui.js"></script>    
+    <!--<script src="frameworks/jquery/jquery-1.11.3.min.js"></script>-->
+    <link href="frameworks/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="frameworks/bootstrap/js/bootstrap.js"></script>    
+    <link href="frameworks/jquery/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="frameworks/jquery/jquery.dataTables.min.js"></script>
+    
+    <!--archivos locales-->
+    
+    <link href="css/masterPage.css" rel="stylesheet" />
+    <script src="js/siteMaster.js"></script>
+
+    
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    
+    </asp:ContentPlaceHolder>
+    
+</head>
+<body>    
+    <form id="form1" runat="server">
+    <div class="container">
+        <header class="row">
+            <section class="col-md-4">
+                
+            </section>
+            <section class="col-md-8">
+                <br />
+                <h5>COLEGIO "EL NUEVO AMANECER" S.A</h5>
+                <h6>Una educaci&oacute;n de calidad</h6>
+            </section>            
+        </header>
+        <br /><br />
+        <section class="row">
+            <section class="col-md-8">
+
+            </section>
+            <section class="col-md-4">
+                <nav>
+                    <ul class="nav nav-pills" >
+                        <li role="presentation" ><a href="Default.aspx">Inicio</a></li>
+                        <li role="presentation" class="active"><button type="button" id="btnIngreso" class="btn btn-primary">Ingresar</button></li>                
+                        <li role="presentation"><a href="Default.aspx">Acerca de </a></li>
+                    </ul>
+                </nav>
+            </section>            
+        </section>
+        
+        <section class="row" id="ContentPlaceHolder">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+            </asp:ContentPlaceHolder>
+        </section>
+        <footer class="row">
+            Derechos Reservados STI S.A.
+        </footer>
+
+        <!--Dialogo para el login-->
+        <div id="Login" title="Ingreso" class="container">
+            <h5>Por favor, ingrese sus datos para ingresar al sistema</h5>
+            <section class="row">                
+                <section class="col-md-4">
+                    <label>Usuario</label>
+                </section>
+                <section class="col-md-8">
+                    <input type="text" placeholder="Ingrese su usuario"/>
+                </section>
+             </section> 
+            <br />
+            <section class="row">
+                <section class="col-md-4">
+                    <label>Clave</label>
+                </section>
+                <section class="col-md-8">
+                    <input type="password" placeholder="Ingrese su clave"/>
+                </section>
+             </section>
+            
+            <h6>Si no tiene una cuenta, clic en <button type="button" class="btn-default" id="btnRegistrar">Regístrarse</button> para crearla</h6>
+            <h6>Para recuperar sus credenciales, clic en <button type="button" class="btn-default" id="btnRecuperar"> Recuperar</button></h6>            
+        </div>
+
+        <!--Dialogo para la recuperacion de claves-->
+        <div id="Recuperar" title="Recuperar" class="container">
+            <h5>Recuperaci&oacute;n de credenciales</h5>
+
+            <section class="row">
+                <section class="col-md-4">
+                    <label>Correo</label>
+                </section>
+                <section class="col-md-8">
+                    <input type="email" placeholder="Ingrese su email"/>
+                </section>
+            </section>
+        </div>
+
+    </div>
+    </form>
+</body>
+</html>

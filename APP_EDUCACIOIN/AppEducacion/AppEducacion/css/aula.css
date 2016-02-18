@@ -1,0 +1,42 @@
+﻿/*#Content2 {
+    background-color:#BDBDBD;
+}
+
+#paginacion {
+    margin: 0 auto;
+    padding:0;
+}*/
+
+#nombrepagina {
+    text-align:right;
+    color:blue;
+    font-size:medium;
+    margin:0 0;
+}
+
+#cantidadRegistros {
+    text-align:left;
+    color:blue;
+    font-size:medium;
+    margin:0 0;
+}
+
+#data {
+    margin:0 auto;
+}
+
+body {
+}
+
+#paginacion {
+    margin:0 auto;
+}
+
+.errorAula {
+    background-color:yellow;
+    border:1px solid red;
+}
+
+
+
+
