@@ -6,14 +6,13 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using BLL;
 
-
 namespace DAL
 {
     //*********************************MODELO*******************************************
     /// <summary>
     /// Modelo de la tabla TIPOPAGOS
     /// </summary>
-    public class ModelTiposPagos
+    public class ModelActividadUnidad
     {
         /// <summary>
         /// campos de la clase
@@ -21,26 +20,37 @@ namespace DAL
         public int PK { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
-        public double Valor { get; set; }
-        public double Descuento { get; set; }
-        public double MoraDia { get; set; }
+        public DateTime Fecha { get;set; }
+        public int PuntosAsignados { get;set; }
+        public int PuntosGanados { get;set; }
+        public int Unidad_id { get;set; }
+        public int TIPO_ACTIVIDAD_id {get;set; }
         public int Estado { get; set; }
         public string Error { get; set; }
 
+
         /// <summary>
-        /// constructor de la clase
+        /// constructor del modelo
         /// </summary>
-        /// <param name="pk">identificador</param>
-        /// <param name="nombre">nombre</param>
-        /// <param name="descripcion">descripcion</param>
-        public ModelTiposPagos(int pk, string nombre, string descripcion,double valor,double valorMora,double descuento, int estado)
+        /// <param name="pk"></param>
+        /// <param name="nombre"></param>
+        /// <param name="descripcion"></param>
+        /// <param name="fecha"></param>
+        /// <param name="puntosAsignados"></param>
+        /// <param name="puntosGanados"></param>
+        /// <param name="unidadId"></param>
+        /// <param name="tipoActividad"></param>
+        /// <param name="estado"></param>
+        public ModelActividadUnidad(int pk, string nombre, string descripcion, DateTime fecha,int puntosAsignados,int puntosGanados,int unidadId,int tipoActividad, int estado)
         {
             this.PK = pk;
             this.Nombre = nombre;
             this.Descripcion = descripcion;
-            this.Valor = valor;
-            this.MoraDia = valorMora;
-            this.Descuento = descuento;
+            this.Fecha=fecha;
+            this.PuntosAsignados=puntosAsignados;
+            this.PuntosGanados=puntosGanados;
+            this.Unidad_id=unidadId;
+            this.TIPO_ACTIVIDAD_id=tipoActividad;
             this.Estado = estado;
             this.Error = string.Empty;
         }
@@ -53,14 +63,11 @@ namespace DAL
         /// <param name="descripcion"></param>
         /// <param name="estado"></param>
         /// <param name="error"></param>
-        public ModelTiposPagos(int pk, string error)
+        public ModelActividadUnidad(int pk, string error)
         {
             this.PK = pk;
             this.Nombre = string.Empty;
             this.Descripcion = string.Empty;
-            this.Valor = 0;
-            this.MoraDia = 0;
-            this.Descuento = 0;
             this.Estado = 0;
             this.Error = error;
         }
@@ -68,7 +75,7 @@ namespace DAL
         /// <summary>
         /// constructor por defecto
         /// </summary>
-        public ModelTiposPagos()
+        public ModelActividadUnidad()
         {
         }
     }
@@ -78,7 +85,7 @@ namespace DAL
     /// <summary>
     /// clase controladora del modelo y sus operaciones
     /// </summary>
-    public class ControllerTiposPagos
+    public class ControllerActividaUnidad
     {
         /// <summary>
         /// campos de la clase
@@ -101,7 +108,7 @@ namespace DAL
         /// <summary>
         /// constructor por defecto, inicializa los campos de las clases
         /// </summary>
-        public ControllerTiposPagos()
+        public ControllerActividaUnidad()
         {
             this.listado.Clear();
             this.Error = string.Empty;
@@ -120,7 +127,7 @@ namespace DAL
         /// <param name="categoria">objeto del modelo</param>
         /// <param name="Operacion">operacion a realizar [false=editar, true=agregar]</param>
         /// <returns></returns>
-        public string Insertar(ModelTiposPagos modelo, bool Operacion)
+        public string Insertar(ModelActividadUnidad modelo, bool Operacion)
         {
             try
             {
@@ -128,27 +135,32 @@ namespace DAL
 
                 if (!Operacion)
                 {
-                    query = "UPDATE TIPOPAGOS SET nombre=@nombre,descripcion=@descripcion,estado=@estado,valor=@valor,montoMora=@mora,descuento=@descuento,user=@user WHERE idTIPOPAGO=@id";
+                    query = "UPDATE ACTIVIDAD SET nombre=@nombre,descripcion=@descripcion,fecha=@fecha,puntosAsignados=@puntosasignados,puntosGanados=@puntosganados, estado=@estado,Unidad_id=@unidad,TIPO_ACTIVIDAD_id=@tipoactividad,user=@user WHERE id=@id";
                     MySqlParameter paramId = new MySqlParameter("id", modelo.PK);
                     parametros.Add(paramId);
                 }
                 else
                 {
-                    query = "INSERT INTO TIPOPAGOS(nombre,descripcion,valor,montoMora,descuento,estado,user) VALUES(@nombre,@descripcion,@valor,@montoMora,@descuento,@estado,@user)";
+                    query = @"INSERT INTO ACTIVIDAD(nombre,descripcion,fecha,puntosAsignados,puntosGanados,Unidad_id,TIPO_ACTIVIDAD_id,estado,user) 
+                            VALUES(@nombre,@descripcion,@puntosasignados,@puntosganados,@unidad,@tipoactividad,@estado,@user)";
                 }
                 MySqlParameter paramNombre = new MySqlParameter("nombre", Encryption.EncryptString(modelo.Nombre));
                 parametros.Add(paramNombre);
                 MySqlParameter paramDescripcion = new MySqlParameter("descripcion", Encryption.EncryptString(modelo.Descripcion));
                 parametros.Add(paramDescripcion);
-                MySqlParameter paramValor = new MySqlParameter("valor", modelo.Valor);
-                parametros.Add(paramValor);
-                MySqlParameter paramMora = new MySqlParameter("mora", modelo.MoraDia);
-                parametros.Add(paramMora);
-                MySqlParameter paramDescuento = new MySqlParameter("descuento", modelo.Descuento);
-                parametros.Add(paramDescuento);
+                MySqlParameter paramAsignados = new MySqlParameter("puntosasignados", modelo.PuntosAsignados);
+                parametros.Add(paramAsignados);
+                MySqlParameter paramGanados = new MySqlParameter("puntosganados", modelo.PuntosGanados);
+                parametros.Add(paramGanados);
+                MySqlParameter paramFecha = new MySqlParameter("fecha", modelo.Fecha);
+                parametros.Add(paramFecha);
+                MySqlParameter paramUnidad = new MySqlParameter("unidad",modelo.Unidad_id);
+                parametros.Add(paramUnidad);
+                MySqlParameter paramTipoActividad = new MySqlParameter("tipoactividad",modelo.TIPO_ACTIVIDAD_id);
+                parametros.Add(paramTipoActividad);
                 MySqlParameter paramEstado = new MySqlParameter("estado", modelo.Estado);
                 parametros.Add(paramEstado);
-                
+
                 bool respuesta = conexion.EjecutarQuery(query, parametros);
                 this.Error = conexion.Error;
                 return this.Error;
@@ -165,11 +177,11 @@ namespace DAL
         /// </summary>
         /// <param name="categoria"></param>
         /// <returns></returns>
-        public bool Eliminar(ModelTiposPagos modelo)
+        public bool Eliminar(ModelActividadUnidad modelo)
         {
             try
             {
-                string query = "DELETE FROM TIPOPAGOS WHERE idTIPOPAGO=@id";
+                string query = "DELETE FROM ACTIVIDAD WHERE id=@id";
                 MySqlParameter paramPk = new MySqlParameter("id", modelo.PK);
                 parametros.Add(paramPk);
                 return conexion.EjecutarQuery(query, parametros);
@@ -197,12 +209,12 @@ namespace DAL
 
                 if (!string.IsNullOrEmpty(busqueda))
                 {
-                    string query = "SELECT COUNT(*) FROM TIPOPAGOS WHERE estado=" + estado + " AND (nombre LIKE'%" + Encryption.EncryptString(busqueda) + "%' OR descripcion LIKE '%" + Encryption.EncryptString(busqueda) + "%') AND (estado<>" + (int)Estados.Tipos.Eliminado + ")";
+                    string query = "SELECT COUNT(*) FROM ACTIVIDAD WHERE estado=" + estado + " AND (nombre LIKE'%" + Encryption.EncryptString(busqueda) + "%' OR descripcion LIKE '%" + Encryption.EncryptString(busqueda) + "%') AND (estado<>" + (int)Estados.Tipos.Eliminado + ")";
                     return conexion.EjecutarQueryCount(query);
                 }
                 else
                 {
-                    string query = "SELECT COUNT(*) FROM TIPOPAGOS WHERE estado=" + estado + " AND estado<>" + (int)Estados.Tipos.Eliminado + "";
+                    string query = "SELECT COUNT(*) FROM ACTIVIDAD WHERE estado=" + estado + " AND estado<>" + (int)Estados.Tipos.Eliminado + "";
                     return conexion.EjecutarQueryCount(query);
                 }
             }
@@ -222,7 +234,7 @@ namespace DAL
         {
             try
             {
-                string query = "SELECT COUNT(*) FROM TIPOPAGOS WHERE nombre='" + Encryption.EncryptString(nombre.ToUpper()) + "'";
+                string query = "SELECT COUNT(*) FROM ACTIVIDAD WHERE nombre='" + Encryption.EncryptString(nombre.ToUpper()) + "'";
                 return conexion.EjecutarQueryCount(query);
             }
             catch (Exception ex)
@@ -230,7 +242,7 @@ namespace DAL
                 this.Error = ex.Message.ToString();
                 return 0;
             }
-        }      
+        }
 
         #endregion
 
@@ -250,7 +262,7 @@ namespace DAL
 
                 foreach (DataRow fila in listado.Rows)
                 {
-                    modelo = new ModelTiposPagos(Convert.ToInt32(fila["id"].ToString()), Encryption.DecryptString(fila["nombre"].ToString()), Encryption.DecryptString(fila["descripcion"].ToString()),Convert.ToDouble(fila["valor"].ToString()),Convert.ToDouble(fila["montoMora"].ToString()),Convert.ToDouble(fila["descuento"].ToString()),Convert.ToInt32(fila["estado"]));
+                    modelo = new ModelTiposPagos(Convert.ToInt32(fila["id"].ToString()), Encryption.DecryptString(fila["nombre"].ToString()), Encryption.DecryptString(fila["descripcion"].ToString()), Convert.ToDouble(fila["valor"].ToString()), Convert.ToDouble(fila["montoMora"].ToString()), Convert.ToDouble(fila["descuento"].ToString()), Convert.ToInt32(fila["estado"]));
                     lista.Add(modelo);
                 }
                 return lista;

@@ -119,6 +119,7 @@ C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\AppEducacion\bin
 C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\AppEducacion\obj\Debug\AppEducacion.csprojResolveAssemblyReference.cache
 C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\AppEducacion\obj\Debug\AppEducacion.dll
 C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\AppEducacion\obj\Debug\AppEducacion.pdb
+<<<<<<< HEAD
 C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\AppEducacion.dll
 C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\AppEducacion.pdb
 C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\DAL.dll
@@ -129,3 +130,15 @@ C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\BL
 C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\obj\Debug\AppEducacion.csprojResolveAssemblyReference.cache
 C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\obj\Debug\AppEducacion.dll
 C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\obj\Debug\AppEducacion.pdb
+=======
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\AppEducacion.dll
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\AppEducacion.pdb
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\DAL.dll
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\MySql.Data.dll
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\BLL.dll
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\DAL.pdb
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\BLL.pdb
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\AppEducacion\obj\Debug\AppEducacion.csprojResolveAssemblyReference.cache
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\AppEducacion\obj\Debug\AppEducacion.dll
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\AppEducacion\obj\Debug\AppEducacion.pdb
+>>>>>>> b7743089bd0bf6d668e06d03650df91a31e2e639

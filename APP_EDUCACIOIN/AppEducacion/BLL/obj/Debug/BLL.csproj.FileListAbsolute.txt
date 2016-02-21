@@ -31,3 +31,8 @@ C:\ultimos cambios\AppEducacion\BLL\bin\Debug\BLL.pdb
 C:\ultimos cambios\AppEducacion\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
 C:\ultimos cambios\AppEducacion\BLL\obj\Debug\BLL.dll
 C:\ultimos cambios\AppEducacion\BLL\obj\Debug\BLL.pdb
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\BLL\bin\Debug\BLL.dll
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\BLL\bin\Debug\BLL.pdb
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\BLL\obj\Debug\BLL.dll
+C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\BLL\obj\Debug\BLL.pdb
