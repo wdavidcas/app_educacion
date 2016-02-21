@@ -119,3 +119,13 @@ C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\AppEducacion\bin
 C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\AppEducacion\obj\Debug\AppEducacion.csprojResolveAssemblyReference.cache
 C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\AppEducacion\obj\Debug\AppEducacion.dll
 C:\Users\ingdavid\Desktop\ultimos cambios 11022016\AppEducacion\AppEducacion\obj\Debug\AppEducacion.pdb
+C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\AppEducacion.dll
+C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\AppEducacion.pdb
+C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\DAL.dll
+C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\MySql.Data.dll
+C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\BLL.dll
+C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\DAL.pdb
+C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\bin\BLL.pdb
+C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\obj\Debug\AppEducacion.csprojResolveAssemblyReference.cache
+C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\obj\Debug\AppEducacion.dll
+C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\AppEducacion\obj\Debug\AppEducacion.pdb
