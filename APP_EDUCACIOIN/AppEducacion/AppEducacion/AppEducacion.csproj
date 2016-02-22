@@ -121,6 +121,7 @@
     <Content Include="imgs\ajax-loader.gif" />
     <Content Include="imgs\contabilidad.jpg" />
     <Content Include="imgs\inventario.jpg" />
+    <Content Include="imgs\logo1.jpg" />
     <Content Include="imgs\rrhh.png" />
     <Content Include="imgs\student.jpg" />
     <Content Include="imgs\teacher.jpg" />

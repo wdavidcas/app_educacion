@@ -2,7 +2,7 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-CREATE SCHEMA IF NOT EXISTS `bdcolegio` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+CREATE SCHEMA IF NOT EXISTS `bdcolegio` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci ;
 USE `bdcolegio` ;
 
 -- -----------------------------------------------------
@@ -13,10 +13,13 @@ DROP TABLE IF EXISTS `bdcolegio`.`Edificio` ;
 CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Edificio` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(25) NULL ,
-  `descripcion` VARCHAR(100) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
   `estado` TINYINT(1) NULL ,
+  `user` VARCHAR(50) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
+
+CREATE UNIQUE INDEX `nombre_UNIQUE` ON `bdcolegio`.`Edificio` (`nombre` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -27,9 +30,10 @@ DROP TABLE IF EXISTS `bdcolegio`.`Modulo` ;
 CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Modulo` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(25) NULL ,
-  `descripcion` VARCHAR(100) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
   `estado` TINYINT(1) NULL ,
   `Edificio_id` INT NOT NULL ,
+  `user` VARCHAR(50) NULL ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_Modulo_Edificio1`
     FOREIGN KEY (`Edificio_id` )
@@ -39,6 +43,8 @@ CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Modulo` (
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_Modulo_Edificio1_idx` ON `bdcolegio`.`Modulo` (`Edificio_id` ASC) ;
+
+CREATE UNIQUE INDEX `nombre_UNIQUE` ON `bdcolegio`.`Modulo` (`nombre` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -52,6 +58,7 @@ CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Aula` (
   `descripcion` VARCHAR(100) NULL ,
   `estado` TINYINT(1) NULL ,
   `Modulo_id` INT NOT NULL ,
+  `user` VARCHAR(50) NULL ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_Aula_Modulo1`
     FOREIGN KEY (`Modulo_id` )
@@ -62,25 +69,7 @@ ENGINE = InnoDB;
 
 CREATE INDEX `fk_Aula_Modulo1_idx` ON `bdcolegio`.`Aula` (`Modulo_id` ASC) ;
 
-
--- -----------------------------------------------------
--- Table `bdcolegio`.`Alumno`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bdcolegio`.`Alumno` ;
-
-CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Alumno` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(25) NULL ,
-  `apellido` VARCHAR(25) NULL ,
-  `direccion` VARCHAR(100) NULL ,
-  `carnet` VARCHAR(10) NULL ,
-  `correo` VARCHAR(50) NULL ,
-  `fechaNacimiento` DATETIME NULL ,
-  `fotografia` VARCHAR(45) NULL ,
-  `cui` VARCHAR(45) NULL ,
-  `estado` INT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
+CREATE UNIQUE INDEX `nombre_UNIQUE` ON `bdcolegio`.`Aula` (`nombre` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -92,17 +81,9 @@ CREATE  TABLE IF NOT EXISTS `bdcolegio`.`AsignacionCurso` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `fecha` DATE NULL ,
   `notaFinal` FLOAT NULL ,
-  `Alumno_id` INT NOT NULL ,
   `estado` TINYINT(1) NULL ,
-  PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_AsignacionCurso_Alumno1`
-    FOREIGN KEY (`Alumno_id` )
-    REFERENCES `bdcolegio`.`Alumno` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
-
-CREATE INDEX `fk_AsignacionCurso_Alumno1_idx` ON `bdcolegio`.`AsignacionCurso` (`Alumno_id` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -134,6 +115,164 @@ CREATE INDEX `fk_AsignacionAula_AsignacionCurso1_idx` ON `bdcolegio`.`Asignacion
 
 
 -- -----------------------------------------------------
+-- Table `bdcolegio`.`CategoriaNivel`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdcolegio`.`CategoriaNivel` ;
+
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`CategoriaNivel` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `codigo` VARCHAR(25) NULL ,
+  `nombre` VARCHAR(15) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
+  `estado` TINYINT(1) NULL DEFAULT TRUE ,
+  `user` VARCHAR(50) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+CREATE UNIQUE INDEX `nombre_UNIQUE` ON `bdcolegio`.`CategoriaNivel` (`nombre` ASC) ;
+
+CREATE UNIQUE INDEX `codigo_UNIQUE` ON `bdcolegio`.`CategoriaNivel` (`codigo` ASC) ;
+
+
+-- -----------------------------------------------------
+-- Table `bdcolegio`.`Nivel`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdcolegio`.`Nivel` ;
+
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Nivel` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `codigo` VARCHAR(25) NULL ,
+  `nombre` VARCHAR(25) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
+  `estado` TINYINT(1) NULL ,
+  `CategoriaNivel_id` INT NOT NULL ,
+  `user` VARCHAR(50) NULL ,
+  PRIMARY KEY (`id`) ,
+  CONSTRAINT `fk_Nivel_CategoriaNivel1`
+    FOREIGN KEY (`CategoriaNivel_id` )
+    REFERENCES `bdcolegio`.`CategoriaNivel` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Nivel_CategoriaNivel1_idx` ON `bdcolegio`.`Nivel` (`CategoriaNivel_id` ASC) ;
+
+CREATE UNIQUE INDEX `nombre_UNIQUE` ON `bdcolegio`.`Nivel` (`nombre` ASC) ;
+
+CREATE UNIQUE INDEX `codigo_UNIQUE` ON `bdcolegio`.`Nivel` (`codigo` ASC) ;
+
+
+-- -----------------------------------------------------
+-- Table `bdcolegio`.`Categoria`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdcolegio`.`Categoria` ;
+
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Categoria` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(25) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
+  `estado` TINYINT(1) NULL ,
+  `user` VARCHAR(50) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdcolegio`.`Curso`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdcolegio`.`Curso` ;
+
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Curso` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `codigoMineduc` VARCHAR(25) NULL ,
+  `nombre` VARCHAR(25) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
+  `creditos` INT(11) NULL ,
+  `Categoria_id` INT NOT NULL ,
+  `user` VARCHAR(50) NULL ,
+  `estado` INT NULL ,
+  `Nivel_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  CONSTRAINT `fk_Curso_Categoria1`
+    FOREIGN KEY (`Categoria_id` )
+    REFERENCES `bdcolegio`.`Categoria` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Curso_Nivel1`
+    FOREIGN KEY (`Nivel_id` )
+    REFERENCES `bdcolegio`.`Nivel` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Curso_Categoria1_idx` ON `bdcolegio`.`Curso` (`Categoria_id` ASC) ;
+
+CREATE INDEX `fk_Curso_Nivel1_idx` ON `bdcolegio`.`Curso` (`Nivel_id` ASC) ;
+
+
+-- -----------------------------------------------------
+-- Table `bdcolegio`.`Alumno`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdcolegio`.`Alumno` ;
+
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Alumno` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(25) NULL ,
+  `apellido` VARCHAR(25) NULL ,
+  `direccion` VARCHAR(50) NULL ,
+  `carnet` VARCHAR(10) NULL ,
+  `correo` VARCHAR(50) NULL ,
+  `fechaNacimiento` DATETIME NULL ,
+  `fotografia` BLOB NULL ,
+  `cui` VARCHAR(13) NULL ,
+  `estado` INT NULL ,
+  `user` VARCHAR(50) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+CREATE UNIQUE INDEX `carnet_UNIQUE` ON `bdcolegio`.`Alumno` (`carnet` ASC) ;
+
+
+-- -----------------------------------------------------
+-- Table `bdcolegio`.`CURSO_NIVEL`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdcolegio`.`CURSO_NIVEL` ;
+
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`CURSO_NIVEL` (
+  `Nivel_id` INT NOT NULL ,
+  `Curso_id` INT NOT NULL ,
+  `fechaAsignacion` DATETIME NULL ,
+  `Estado` INT NULL ,
+  `Creditos` INT NULL ,
+  `NotaMinomoAprobacion` FLOAT NULL ,
+  `id` INT NOT NULL ,
+  `Alumno_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  CONSTRAINT `fk_Nivel_has_Curso_Nivel1`
+    FOREIGN KEY (`Nivel_id` )
+    REFERENCES `bdcolegio`.`Nivel` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Nivel_has_Curso_Curso1`
+    FOREIGN KEY (`Curso_id` )
+    REFERENCES `bdcolegio`.`Curso` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_CURSO_NIVEL_Alumno1`
+    FOREIGN KEY (`Alumno_id` )
+    REFERENCES `bdcolegio`.`Alumno` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Nivel_has_Curso_Curso1_idx` ON `bdcolegio`.`CURSO_NIVEL` (`Curso_id` ASC) ;
+
+CREATE INDEX `fk_Nivel_has_Curso_Nivel1_idx` ON `bdcolegio`.`CURSO_NIVEL` (`Nivel_id` ASC) ;
+
+CREATE INDEX `fk_CURSO_NIVEL_Alumno1_idx` ON `bdcolegio`.`CURSO_NIVEL` (`Alumno_id` ASC) ;
+
+
+-- -----------------------------------------------------
 -- Table `bdcolegio`.`Unidad`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `bdcolegio`.`Unidad` ;
@@ -148,16 +287,31 @@ CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Unidad` (
   `acreditacionExamen` FLOAT NULL ,
   `examenUnidad` FLOAT NULL ,
   `estado` TINYINT(1) NULL ,
-  `AsignacionCurso_id` INT NOT NULL ,
+  `CURSO_NIVEL_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_Unidad_AsignacionCurso1`
-    FOREIGN KEY (`AsignacionCurso_id` )
-    REFERENCES `bdcolegio`.`AsignacionCurso` (`id` )
+  CONSTRAINT `fk_Unidad_CURSO_NIVEL1`
+    FOREIGN KEY (`CURSO_NIVEL_id` )
+    REFERENCES `bdcolegio`.`CURSO_NIVEL` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Unidad_AsignacionCurso1_idx` ON `bdcolegio`.`Unidad` (`AsignacionCurso_id` ASC) ;
+CREATE INDEX `fk_Unidad_CURSO_NIVEL1_idx` ON `bdcolegio`.`Unidad` (`CURSO_NIVEL_id` ASC) ;
+
+
+-- -----------------------------------------------------
+-- Table `bdcolegio`.`TIPO_ACTIVIDAD`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdcolegio`.`TIPO_ACTIVIDAD` ;
+
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`TIPO_ACTIVIDAD` (
+  `id` INT NOT NULL ,
+  `nombre` VARCHAR(25) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
+  `estado` INT NULL ,
+  `user` VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -174,51 +328,23 @@ CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Actividad` (
   `puntosGanados` FLOAT NULL ,
   `estado` TINYINT(1) NULL ,
   `Unidad_id` INT NOT NULL ,
+  `TIPO_ACTIVIDAD_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_Actividad_Unidad1`
     FOREIGN KEY (`Unidad_id` )
     REFERENCES `bdcolegio`.`Unidad` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Actividad_TIPO_ACTIVIDAD1`
+    FOREIGN KEY (`TIPO_ACTIVIDAD_id` )
+    REFERENCES `bdcolegio`.`TIPO_ACTIVIDAD` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_Actividad_Unidad1_idx` ON `bdcolegio`.`Actividad` (`Unidad_id` ASC) ;
 
-
--- -----------------------------------------------------
--- Table `bdcolegio`.`CategoriaNivel`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bdcolegio`.`CategoriaNivel` ;
-
-CREATE  TABLE IF NOT EXISTS `bdcolegio`.`CategoriaNivel` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(25) NULL ,
-  `descripcion` VARCHAR(100) NULL ,
-  `estado` TINYINT(1) NULL DEFAULT TRUE ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `bdcolegio`.`Nivel`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bdcolegio`.`Nivel` ;
-
-CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Nivel` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(25) NULL ,
-  `descripcion` VARCHAR(100) NULL ,
-  `estado` TINYINT(1) NULL ,
-  `CategoriaNivel_id` INT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_Nivel_CategoriaNivel1`
-    FOREIGN KEY (`CategoriaNivel_id` )
-    REFERENCES `bdcolegio`.`CategoriaNivel` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX `fk_Nivel_CategoriaNivel1_idx` ON `bdcolegio`.`Nivel` (`CategoriaNivel_id` ASC) ;
+CREATE INDEX `fk_Actividad_TIPO_ACTIVIDAD1_idx` ON `bdcolegio`.`Actividad` (`TIPO_ACTIVIDAD_id` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -230,23 +356,15 @@ CREATE  TABLE IF NOT EXISTS `bdcolegio`.`AsignacionNivel` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `fecha` DATE NULL ,
   `Nivel_id` INT NOT NULL ,
-  `Alumno_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_AsignacionNivel_Nivel1`
     FOREIGN KEY (`Nivel_id` )
     REFERENCES `bdcolegio`.`Nivel` (`id` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_AsignacionNivel_Alumno1`
-    FOREIGN KEY (`Alumno_id` )
-    REFERENCES `bdcolegio`.`Alumno` (`id` )
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_AsignacionNivel_Nivel1_idx` ON `bdcolegio`.`AsignacionNivel` (`Nivel_id` ASC) ;
-
-CREATE INDEX `fk_AsignacionNivel_Alumno1_idx` ON `bdcolegio`.`AsignacionNivel` (`Alumno_id` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -256,11 +374,14 @@ DROP TABLE IF EXISTS `bdcolegio`.`TipoEstado` ;
 
 CREATE  TABLE IF NOT EXISTS `bdcolegio`.`TipoEstado` (
   `idTipoEstado` INT NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(45) NULL ,
-  `descripcion` VARCHAR(45) NULL ,
-  `habilitado` BLOB NULL ,
+  `nombre` VARCHAR(25) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
+  `habilitado` INT NULL ,
+  `user` VARCHAR(50) NULL ,
   PRIMARY KEY (`idTipoEstado`) )
 ENGINE = InnoDB;
+
+CREATE UNIQUE INDEX `nombre_UNIQUE` ON `bdcolegio`.`TipoEstado` (`nombre` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -293,8 +414,9 @@ DROP TABLE IF EXISTS `bdcolegio`.`Parentesco` ;
 CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Parentesco` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(25) NULL ,
-  `descripcion` VARCHAR(100) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
   `estado` TINYINT(1) NULL ,
+  `user` VARCHAR(50) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -308,26 +430,21 @@ CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Familiares` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(25) NULL ,
   `apellido` VARCHAR(25) NULL ,
-  `direccion` VARCHAR(100) NULL ,
-  `correo` VARCHAR(100) NULL ,
+  `direccion` VARCHAR(50) NULL ,
+  `correo` VARCHAR(50) NULL ,
   `Parentesco_id` INT NOT NULL ,
-  `Alumno_id` INT NOT NULL ,
   `esResponsableDirecto` BIT NULL ,
   `nivelResponsabilidad` INT NULL ,
-  `Estado_id` INT NOT NULL ,
+  `estado` INT NOT NULL ,
+  `user` VARCHAR(50) NULL ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_Responsable_Parentesco1`
     FOREIGN KEY (`Parentesco_id` )
     REFERENCES `bdcolegio`.`Parentesco` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Responsable_Alumno1`
-    FOREIGN KEY (`Alumno_id` )
-    REFERENCES `bdcolegio`.`Alumno` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Familiares_Estado1`
-    FOREIGN KEY (`Estado_id` )
+    FOREIGN KEY (`estado` )
     REFERENCES `bdcolegio`.`Estado` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -335,9 +452,7 @@ ENGINE = InnoDB;
 
 CREATE INDEX `fk_Responsable_Parentesco1_idx` ON `bdcolegio`.`Familiares` (`Parentesco_id` ASC) ;
 
-CREATE INDEX `fk_Responsable_Alumno1_idx` ON `bdcolegio`.`Familiares` (`Alumno_id` ASC) ;
-
-CREATE INDEX `fk_Familiares_Estado1_idx` ON `bdcolegio`.`Familiares` (`Estado_id` ASC) ;
+CREATE INDEX `fk_Familiares_Estado1_idx` ON `bdcolegio`.`Familiares` (`estado` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -348,8 +463,9 @@ DROP TABLE IF EXISTS `bdcolegio`.`TipoTelefono` ;
 CREATE  TABLE IF NOT EXISTS `bdcolegio`.`TipoTelefono` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(25) NULL ,
-  `descripcion` VARCHAR(100) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
   `estado` TINYINT(1) NULL ,
+  `user` VARCHAR(50) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -363,11 +479,14 @@ DROP TABLE IF EXISTS `bdcolegio`.`PROFESION` ;
 
 CREATE  TABLE IF NOT EXISTS `bdcolegio`.`PROFESION` (
   `idPROFESION` INT NOT NULL ,
-  `nombre` VARCHAR(45) NULL ,
-  `descripcion` VARCHAR(45) NULL ,
-  `estado` TINYINT(1) NULL DEFAULT 1 ,
+  `nombre` VARCHAR(30) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
+  `estado` INT NULL DEFAULT 1 ,
+  `user` VARCHAR(50) NULL ,
   PRIMARY KEY (`idPROFESION`) )
 ENGINE = InnoDB;
+
+CREATE UNIQUE INDEX `nombre_UNIQUE` ON `bdcolegio`.`PROFESION` (`nombre` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -379,19 +498,15 @@ CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Profesor` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(25) NULL ,
   `apellido` VARCHAR(25) NULL ,
-  `direccion` VARCHAR(100) NULL ,
+  `direccion` VARCHAR(50) NULL ,
   `correo` VARCHAR(50) NULL ,
-  `estudia` TINYINT(1) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
   `fechaNacimiento` DATE NULL ,
-  `cui` VARCHAR(45) NULL ,
-  `Estado_id` INT NOT NULL ,
+  `cui` VARCHAR(13) NULL ,
   `PROFESION_idPROFESION` INT NOT NULL ,
+  `estado` INT NULL ,
+  `user` VARCHAR(50) NULL ,
   PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_Profesor_Estado1`
-    FOREIGN KEY (`Estado_id` )
-    REFERENCES `bdcolegio`.`Estado` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Profesor_PROFESION1`
     FOREIGN KEY (`PROFESION_idPROFESION` )
     REFERENCES `bdcolegio`.`PROFESION` (`idPROFESION` )
@@ -399,9 +514,9 @@ CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Profesor` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Profesor_Estado1_idx` ON `bdcolegio`.`Profesor` (`Estado_id` ASC) ;
-
 CREATE INDEX `fk_Profesor_PROFESION1_idx` ON `bdcolegio`.`Profesor` (`PROFESION_idPROFESION` ASC) ;
+
+CREATE UNIQUE INDEX `correo_UNIQUE` ON `bdcolegio`.`Profesor` (`correo` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -450,50 +565,6 @@ CREATE INDEX `fk_Telefono_Profesor1_idx` ON `bdcolegio`.`Telefono` (`Profesor_id
 
 
 -- -----------------------------------------------------
--- Table `bdcolegio`.`Categoria`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bdcolegio`.`Categoria` ;
-
-CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Categoria` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(25) NULL ,
-  `descripcion` VARCHAR(100) NULL ,
-  `estado` TINYINT(1) NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `bdcolegio`.`Curso`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bdcolegio`.`Curso` ;
-
-CREATE  TABLE IF NOT EXISTS `bdcolegio`.`Curso` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(25) NULL ,
-  `descripcion` VARCHAR(100) NULL ,
-  `creditos` INT(11) NULL ,
-  `Categoria_id` INT NOT NULL ,
-  `Estado_id` INT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  CONSTRAINT `fk_Curso_Categoria1`
-    FOREIGN KEY (`Categoria_id` )
-    REFERENCES `bdcolegio`.`Categoria` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Curso_Estado1`
-    FOREIGN KEY (`Estado_id` )
-    REFERENCES `bdcolegio`.`Estado` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX `fk_Curso_Categoria1_idx` ON `bdcolegio`.`Curso` (`Categoria_id` ASC) ;
-
-CREATE INDEX `fk_Curso_Estado1_idx` ON `bdcolegio`.`Curso` (`Estado_id` ASC) ;
-
-
--- -----------------------------------------------------
 -- Table `bdcolegio`.`AsignacionCatedra`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `bdcolegio`.`AsignacionCatedra` ;
@@ -529,16 +600,8 @@ DROP TABLE IF EXISTS `bdcolegio`.`DiaSemana` ;
 CREATE  TABLE IF NOT EXISTS `bdcolegio`.`DiaSemana` (
   `idDiaSemana` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(45) NULL ,
-  `Estado_id` INT NOT NULL ,
-  PRIMARY KEY (`idDiaSemana`) ,
-  CONSTRAINT `fk_DiaSemana_Estado1`
-    FOREIGN KEY (`Estado_id` )
-    REFERENCES `bdcolegio`.`Estado` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`idDiaSemana`) )
 ENGINE = InnoDB;
-
-CREATE INDEX `fk_DiaSemana_Estado1_idx` ON `bdcolegio`.`DiaSemana` (`Estado_id` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -577,8 +640,8 @@ DROP TABLE IF EXISTS `bdcolegio`.`INVENTARIO_FISICO` ;
 
 CREATE  TABLE IF NOT EXISTS `bdcolegio`.`INVENTARIO_FISICO` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(45) NULL ,
-  `descripcion` VARCHAR(45) NULL ,
+  `nombre` VARCHAR(25) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
   `existencias` INT NULL ,
   `precio` FLOAT NULL ,
   `depreciacion` FLOAT NULL ,
@@ -587,7 +650,8 @@ CREATE  TABLE IF NOT EXISTS `bdcolegio`.`INVENTARIO_FISICO` (
   `modelo` VARCHAR(45) NULL ,
   `Modulo_id` INT NULL ,
   `Edificio_id` INT NULL ,
-  `Estado_id` INT NOT NULL ,
+  `estado` INT NULL ,
+  `user` VARCHAR(50) NULL ,
   PRIMARY KEY (`id`) ,
   CONSTRAINT `fk_COSAS_Aula1`
     FOREIGN KEY (`Aula_id` )
@@ -603,11 +667,6 @@ CREATE  TABLE IF NOT EXISTS `bdcolegio`.`INVENTARIO_FISICO` (
     FOREIGN KEY (`Edificio_id` )
     REFERENCES `bdcolegio`.`Edificio` (`id` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_INVENTARIO_FISICO_Estado1`
-    FOREIGN KEY (`Estado_id` )
-    REFERENCES `bdcolegio`.`Estado` (`id` )
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -617,39 +676,132 @@ CREATE INDEX `fk_INVENTARIO_FISICO_Modulo1_idx` ON `bdcolegio`.`INVENTARIO_FISIC
 
 CREATE INDEX `fk_INVENTARIO_FISICO_Edificio1_idx` ON `bdcolegio`.`INVENTARIO_FISICO` (`Edificio_id` ASC) ;
 
-CREATE INDEX `fk_INVENTARIO_FISICO_Estado1_idx` ON `bdcolegio`.`INVENTARIO_FISICO` (`Estado_id` ASC) ;
+
+-- -----------------------------------------------------
+-- Table `bdcolegio`.`TIPOPAGOS`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdcolegio`.`TIPOPAGOS` ;
+
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`TIPOPAGOS` (
+  `idTIPOPAGO` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(25) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
+  `valor` FLOAT NULL ,
+  `montoMora` FLOAT NULL ,
+  `descuento` FLOAT NULL ,
+  `estado` INT NULL ,
+  `user` VARCHAR(50) NULL ,
+  PRIMARY KEY (`idTIPOPAGO`) )
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `bdcolegio`.`CURSO_NIVEL`
+-- Table `bdcolegio`.`PAGOS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `bdcolegio`.`CURSO_NIVEL` ;
+DROP TABLE IF EXISTS `bdcolegio`.`PAGOS` ;
 
-CREATE  TABLE IF NOT EXISTS `bdcolegio`.`CURSO_NIVEL` (
-  `Nivel_id` INT NOT NULL ,
-  `Curso_id` INT NOT NULL ,
-  `fechaAsignacion` DATETIME NULL ,
-  `Estado` INT NULL ,
-  `Creditos` INT NULL ,
-  `CodigoMineduc` VARCHAR(45) NULL ,
-  `CodigoInterno` VARCHAR(45) NULL ,
-  `NotaMinomoAprobacion` FLOAT NULL ,
-  PRIMARY KEY (`Nivel_id`, `Curso_id`) ,
-  CONSTRAINT `fk_Nivel_has_Curso_Nivel1`
-    FOREIGN KEY (`Nivel_id` )
-    REFERENCES `bdcolegio`.`Nivel` (`id` )
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`PAGOS` (
+  `idPAGOS` INT NOT NULL AUTO_INCREMENT ,
+  `descripcion` VARCHAR(50) NULL ,
+  `cantidad` INT NULL ,
+  `precio` FLOAT NULL ,
+  `total` FLOAT NULL ,
+  `estado` INT NULL ,
+  `fecha` DATETIME NULL ,
+  `mesCorresponde` INT NULL ,
+  `TIPOPAGO_idTIPOPAGO` INT NOT NULL ,
+  `Alumno_id` INT NOT NULL ,
+  `user` VARCHAR(50) NULL ,
+  PRIMARY KEY (`idPAGOS`) ,
+  CONSTRAINT `fk_PAGOS_TIPOPAGO1`
+    FOREIGN KEY (`TIPOPAGO_idTIPOPAGO` )
+    REFERENCES `bdcolegio`.`TIPOPAGOS` (`idTIPOPAGO` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Nivel_has_Curso_Curso1`
-    FOREIGN KEY (`Curso_id` )
-    REFERENCES `bdcolegio`.`Curso` (`id` )
+  CONSTRAINT `fk_PAGOS_Alumno1`
+    FOREIGN KEY (`Alumno_id` )
+    REFERENCES `bdcolegio`.`Alumno` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Nivel_has_Curso_Curso1_idx` ON `bdcolegio`.`CURSO_NIVEL` (`Curso_id` ASC) ;
+CREATE INDEX `fk_PAGOS_TIPOPAGO1_idx` ON `bdcolegio`.`PAGOS` (`TIPOPAGO_idTIPOPAGO` ASC) ;
 
-CREATE INDEX `fk_Nivel_has_Curso_Nivel1_idx` ON `bdcolegio`.`CURSO_NIVEL` (`Nivel_id` ASC) ;
+CREATE INDEX `fk_PAGOS_Alumno1_idx` ON `bdcolegio`.`PAGOS` (`Alumno_id` ASC) ;
+
+
+-- -----------------------------------------------------
+-- Table `bdcolegio`.`TIPOLIBROS`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdcolegio`.`TIPOLIBROS` ;
+
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`TIPOLIBROS` (
+  `idTIPOLIBRO` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(25) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
+  `estado` INT NULL ,
+  `user` VARCHAR(50) NULL ,
+  PRIMARY KEY (`idTIPOLIBRO`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdcolegio`.`LIBROS`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdcolegio`.`LIBROS` ;
+
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`LIBROS` (
+  `idLIBROS` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(50) NULL ,
+  `autor` VARCHAR(25) NULL ,
+  `editorial` VARCHAR(25) NULL ,
+  `codigo` VARCHAR(20) NULL ,
+  `descripcion` VARCHAR(50) NULL ,
+  `cantidad` INT NULL ,
+  `cantidadDisponible` INT NULL ,
+  `estado` INT NULL ,
+  `paginas` INT NULL ,
+  `TIPOLIBRO_idTIPOLIBRO` INT NOT NULL ,
+  `user` VARCHAR(50) NULL ,
+  PRIMARY KEY (`idLIBROS`) ,
+  CONSTRAINT `fk_LIBROS_TIPOLIBRO1`
+    FOREIGN KEY (`TIPOLIBRO_idTIPOLIBRO` )
+    REFERENCES `bdcolegio`.`TIPOLIBROS` (`idTIPOLIBRO` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_LIBROS_TIPOLIBRO1_idx` ON `bdcolegio`.`LIBROS` (`TIPOLIBRO_idTIPOLIBRO` ASC) ;
+
+
+-- -----------------------------------------------------
+-- Table `bdcolegio`.`PRESTAMOLIBROS`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdcolegio`.`PRESTAMOLIBROS` ;
+
+CREATE  TABLE IF NOT EXISTS `bdcolegio`.`PRESTAMOLIBROS` (
+  `idPRESTAMOLIBROS` INT NOT NULL AUTO_INCREMENT ,
+  `fechaPrestamo` DATETIME NULL ,
+  `fechaDevolucion` DATETIME NULL ,
+  `cantidad` INT NULL ,
+  `Alumno_id` INT NOT NULL ,
+  `LIBROS_idLIBROS` INT NOT NULL ,
+  PRIMARY KEY (`idPRESTAMOLIBROS`) ,
+  CONSTRAINT `fk_PRESTAMOLIBROS_Alumno1`
+    FOREIGN KEY (`Alumno_id` )
+    REFERENCES `bdcolegio`.`Alumno` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_PRESTAMOLIBROS_LIBROS1`
+    FOREIGN KEY (`LIBROS_idLIBROS` )
+    REFERENCES `bdcolegio`.`LIBROS` (`idLIBROS` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_PRESTAMOLIBROS_Alumno1_idx` ON `bdcolegio`.`PRESTAMOLIBROS` (`Alumno_id` ASC) ;
+
+CREATE INDEX `fk_PRESTAMOLIBROS_LIBROS1_idx` ON `bdcolegio`.`PRESTAMOLIBROS` (`LIBROS_idLIBROS` ASC) ;
 
 
 
@@ -662,10 +814,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `bdcolegio`;
-INSERT INTO `bdcolegio`.`CategoriaNivel` (`id`, `nombre`, `descripcion`, `estado`) VALUES (1, 'PRIMARIA', 'PRIMARIA', 1);
-INSERT INTO `bdcolegio`.`CategoriaNivel` (`id`, `nombre`, `descripcion`, `estado`) VALUES (2, 'BASICO', 'BASICO', 1);
-INSERT INTO `bdcolegio`.`CategoriaNivel` (`id`, `nombre`, `descripcion`, `estado`) VALUES (3, 'DIVERSIFICADO', 'DIVERSIFICADO', 1);
-INSERT INTO `bdcolegio`.`CategoriaNivel` (`id`, `nombre`, `descripcion`, `estado`) VALUES (4, 'LICENCIATURAS', 'LICENCIATURAS', 1);
+INSERT INTO `bdcolegio`.`CategoriaNivel` (`id`, `codigo`, `nombre`, `descripcion`, `estado`, `user`) VALUES (1, NULL, 'PRIMARIA', 'PRIMARIA', 1, NULL);
+INSERT INTO `bdcolegio`.`CategoriaNivel` (`id`, `codigo`, `nombre`, `descripcion`, `estado`, `user`) VALUES (2, NULL, 'BASICO', 'BASICO', 1, NULL);
+INSERT INTO `bdcolegio`.`CategoriaNivel` (`id`, `codigo`, `nombre`, `descripcion`, `estado`, `user`) VALUES (3, NULL, 'DIVERSIFICADO', 'DIVERSIFICADO', 1, NULL);
+INSERT INTO `bdcolegio`.`CategoriaNivel` (`id`, `codigo`, `nombre`, `descripcion`, `estado`, `user`) VALUES (4, NULL, 'LICENCIATURAS', 'LICENCIATURAS', 1, NULL);
 
 COMMIT;
 
@@ -674,35 +826,12 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `bdcolegio`;
-INSERT INTO `bdcolegio`.`Nivel` (`id`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`) VALUES (1, 'PRIMERO', 'PRIMERO', 1, 1);
-INSERT INTO `bdcolegio`.`Nivel` (`id`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`) VALUES (2, 'SEGUNDO', 'SEGUNDO', 1, 1);
-INSERT INTO `bdcolegio`.`Nivel` (`id`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`) VALUES (3, 'TERCERO', 'TERCERO', 1, 1);
-INSERT INTO `bdcolegio`.`Nivel` (`id`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`) VALUES (4, 'CUARTO', 'CUARTO', 1, 1);
-INSERT INTO `bdcolegio`.`Nivel` (`id`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`) VALUES (5, 'QUINTO', 'QUINTO', 1, 1);
-INSERT INTO `bdcolegio`.`Nivel` (`id`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`) VALUES (6, 'SEXTO', 'SEXTO', 1, 1);
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `bdcolegio`.`Parentesco`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `bdcolegio`;
-INSERT INTO `bdcolegio`.`Parentesco` (`id`, `nombre`, `descripcion`, `estado`) VALUES (1, 'PADRE', 'PADRE', 1);
-INSERT INTO `bdcolegio`.`Parentesco` (`id`, `nombre`, `descripcion`, `estado`) VALUES (2, 'MADRE', 'MADRE', 1);
-INSERT INTO `bdcolegio`.`Parentesco` (`id`, `nombre`, `descripcion`, `estado`) VALUES (3, 'TIO', 'TIO', 1);
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `bdcolegio`.`TipoTelefono`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `bdcolegio`;
-INSERT INTO `bdcolegio`.`TipoTelefono` (`id`, `nombre`, `descripcion`, `estado`) VALUES (1, 'CELULAR', 'CELULAR', 1);
-INSERT INTO `bdcolegio`.`TipoTelefono` (`id`, `nombre`, `descripcion`, `estado`) VALUES (2, 'RESIDENCIAL', 'RESIDENCIAL', 1);
-INSERT INTO `bdcolegio`.`TipoTelefono` (`id`, `nombre`, `descripcion`, `estado`) VALUES (3, 'TRABAJO', 'TRABAJO', 1);
-INSERT INTO `bdcolegio`.`TipoTelefono` (`id`, `nombre`, `descripcion`, `estado`) VALUES (4, 'EMERGENCIA', 'EMERGENCIA', 1);
+INSERT INTO `bdcolegio`.`Nivel` (`id`, `codigo`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`, `user`) VALUES (1, NULL, 'PRIMERO', 'PRIMERO', 1, 1, NULL);
+INSERT INTO `bdcolegio`.`Nivel` (`id`, `codigo`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`, `user`) VALUES (2, NULL, 'SEGUNDO', 'SEGUNDO', 1, 1, NULL);
+INSERT INTO `bdcolegio`.`Nivel` (`id`, `codigo`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`, `user`) VALUES (3, NULL, 'TERCERO', 'TERCERO', 1, 1, NULL);
+INSERT INTO `bdcolegio`.`Nivel` (`id`, `codigo`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`, `user`) VALUES (4, NULL, 'CUARTO', 'CUARTO', 1, 1, NULL);
+INSERT INTO `bdcolegio`.`Nivel` (`id`, `codigo`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`, `user`) VALUES (5, NULL, 'QUINTO', 'QUINTO', 1, 1, NULL);
+INSERT INTO `bdcolegio`.`Nivel` (`id`, `codigo`, `nombre`, `descripcion`, `estado`, `CategoriaNivel_id`, `user`) VALUES (6, NULL, 'SEXTO', 'SEXTO', 1, 1, NULL);
 
 COMMIT;
 
@@ -711,8 +840,42 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `bdcolegio`;
-INSERT INTO `bdcolegio`.`Categoria` (`id`, `nombre`, `descripcion`, `estado`) VALUES (1, 'NUMERICO', 'NUMERICO', 1);
-INSERT INTO `bdcolegio`.`Categoria` (`id`, `nombre`, `descripcion`, `estado`) VALUES (2, 'IDIOMAS', 'IDIOMAS', 1);
-INSERT INTO `bdcolegio`.`Categoria` (`id`, `nombre`, `descripcion`, `estado`) VALUES (3, 'LENGUAJE', 'LENGUAJE', 1);
+INSERT INTO `bdcolegio`.`Categoria` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (1, 'NUMERICO', 'NUMERICO', 1, NULL);
+INSERT INTO `bdcolegio`.`Categoria` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (2, 'IDIOMAS', 'IDIOMAS', 1, NULL);
+INSERT INTO `bdcolegio`.`Categoria` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (3, 'LENGUAJE', 'LENGUAJE', 1, NULL);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `bdcolegio`.`TIPO_ACTIVIDAD`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `bdcolegio`;
+INSERT INTO `bdcolegio`.`TIPO_ACTIVIDAD` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (, 'LABORATORIO', 'LABORATORIOS', 1, 'ADMIN');
+INSERT INTO `bdcolegio`.`TIPO_ACTIVIDAD` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (NULL, 'EXAMEN CORTO', 'EXAMEN CORTO', 1, 'ADMIN');
+INSERT INTO `bdcolegio`.`TIPO_ACTIVIDAD` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (NULL, 'QUIZ', 'QUIZ', 1, 'ADMIN');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `bdcolegio`.`Parentesco`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `bdcolegio`;
+INSERT INTO `bdcolegio`.`Parentesco` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (1, 'PADRE', 'PADRE', 1, NULL);
+INSERT INTO `bdcolegio`.`Parentesco` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (2, 'MADRE', 'MADRE', 1, NULL);
+INSERT INTO `bdcolegio`.`Parentesco` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (3, 'TIO', 'TIO', 1, NULL);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `bdcolegio`.`TipoTelefono`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `bdcolegio`;
+INSERT INTO `bdcolegio`.`TipoTelefono` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (1, 'CELULAR', 'CELULAR', 1, NULL);
+INSERT INTO `bdcolegio`.`TipoTelefono` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (2, 'RESIDENCIAL', 'RESIDENCIAL', 1, NULL);
+INSERT INTO `bdcolegio`.`TipoTelefono` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (3, 'TRABAJO', 'TRABAJO', 1, NULL);
+INSERT INTO `bdcolegio`.`TipoTelefono` (`id`, `nombre`, `descripcion`, `estado`, `user`) VALUES (4, 'EMERGENCIA', 'EMERGENCIA', 1, NULL);
 
 COMMIT;

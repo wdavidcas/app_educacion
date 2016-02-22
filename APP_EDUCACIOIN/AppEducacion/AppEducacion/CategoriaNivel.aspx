@@ -67,6 +67,7 @@
         
         <!--#####################################################################################################-->
         <!--*********formulario para el registro de datos*********-->
+        <!--
         <div id="formulario" title="Informaci&oacute;n de la categoría" class="modal">            
             <div class="row">
                 <input type="text" id="pk"/>
@@ -102,7 +103,7 @@
                 </div>
             </div>  
             <br />
-        </div>
+        </div>-->
         <!--********fin del formulario**********--> 
         
         <!--#####################################################################################################-->
@@ -128,4 +129,35 @@
         </div> 
     </div>
     <!--**********fin del contenedor**********-->
+
+   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Información de la categoría</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="txtCodigo" class="control-label">Código</label>
+            <input type="text" class="form-control" id="txtCodigo" maxlength="15" placeholder="Ingrese nombre" />           
+          </div>
+          <div class="form-group">
+            <label for="txtNombre" class="control-label">Nombre</label>
+            <input type="text" class="form-control" id="txtNombre" maxlength="15" placeholder="Ingrese nombre" />           
+          </div>
+          <div class="form-group">
+            <label for="txtDescripcion" class="control-label">Descripción</label>
+            <textarea class="form-control" id="txtDescripcion" maxlength="50" data-toogle="tooltip" title="Descripción"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btnGuardar"><span class="glyphicon glyphicon-floppy-disk">Guardar</span></button>
+      </div>
+    </div>
+  </div>
+</div>
 </asp:Content>

@@ -31,12 +31,11 @@
     <form id="form1" runat="server">
     <div class="container" style="width:100%">
         <header class="row">
-            <section class="col-lg-4">
-                LOGOTIPO
-                <!--<img src="imgs/logo.jpg" alt="Logotipo" style="width:125px;height:125px"/>-->
+            <section class="col-lg-4">              
+                <!--<img src="imgs/logo1.jpg" alt="Logotipo" style="width:300px;height:300px"/>-->
             </section>
             <section class="col-md-8">
-                <h3>PORTAL DE ADMINISTRACIÓN EN EDUCACIÓN </h3>                 
+                <h3>PORTAL DE ADMINISTRACIÓN EDUCATIVO </h3>                 
             </section>            
         </header><!--fin del encabezado-->
         <section class="row">

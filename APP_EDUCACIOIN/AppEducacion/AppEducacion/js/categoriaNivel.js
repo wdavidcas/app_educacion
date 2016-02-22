@@ -340,13 +340,38 @@ $(window).load(function () {
     //******************FIN FUNCIONES AUXILIARES************************    
     var buscar = document.getElementById("btnBuscar");    
     var refrescar = document.getElementById("btnRefrescar");
-    var agregar = document.getElementById("btnNuevo");    
+    var agregar = document.getElementById("btnNuevo");
+    var guardar = document.getElementById("btnGuardar");
       
     agregar.addEventListener("click", abrirFormularioNuevo, false);
     buscar.addEventListener("click", ejecutarBusqueda, false);
     refrescar.addEventListener("click", ejecutarRefrescar, false);
+    guardar.addEventListener("click", accionCrud, false);
 
-    function abrirFormularioNuevo(){
+    function accionCrud() {
+        //captura los campos para formar el objeto
+        var nombre = $("#txtNombre").val();
+        var descripcion = $("#txtDescripcion").val();
+        var estado = $("select[id=ddlEstado]").val();
+        var codigo = $("#txtCodigo").val();
+
+        llave = $("#pk").val();
+
+        //guardar
+        if (esGuardar == true) {
+            Guardar(nombre, descripcion, estado);
+            //getData((paginaActual-1)*paginacion,paginacion);
+        } else if (esGuardar == false) {//editar
+            Guardar(nombre, descripcion, estado);
+            //getData((paginaActual - 1) * paginacion, paginacion);
+        }
+        else if (esGuardar == null) {
+            $("#formulario").dialog("close");
+        }
+    }
+
+    function abrirFormularioNuevo() {
+        $('#exampleModal').modal('show');
         esGuardar = true;
         $("#txtNombre").val("");
         $("#txtDescripcion").val("");
