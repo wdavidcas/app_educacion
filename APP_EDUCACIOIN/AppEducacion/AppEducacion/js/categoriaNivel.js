@@ -16,10 +16,10 @@ $(window).load(function () {
     var tamanioPagina = Math.floor(cantidadRegistros / paginacion);
     //arrays para el  nombre del encabezado
     var headColumnas = new Array();
-    headColumnas.push(["NOMBRE", "DESCRIPCIÓN", "EDITAR", "VER", "BORRAR"]);
+    headColumnas.push(["CÓDIGO","NOMBRE", "DESCRIPCIÓN", "EDITAR", "VER", "BORRAR"]);
     //array para el ancho de las columnas
     var widthColumnas = new Array();
-    widthColumnas.push([45, 31, 8, 8, 8]);
+    widthColumnas.push([15,30, 31, 8, 8, 8]);
 
     //**************************CONTENIDO INICIAL HTML********************************
     $("#ddlEstados").val(1);
@@ -82,21 +82,36 @@ $(window).load(function () {
 
                 if (listado.length > 0) {
                     var id = listado[0].PK;
+                    var codigo = listado[0].Codigo;
                     var nombre = listado[0].Nombre;
                     var descripcion = listado[0].Descripcion;
                     var estado = listado[0].Estado;
 
                     $("#txtNombre").val(nombre);
                     $("#txtDescripcion").val(descripcion);
+                    $("#txtCodigo").val(codigo);
                     $("#ddlEstado").val(estado);
                     $("#pk").val(id);
 
+                    $("#txtNombre").removeClass("enfoco");
+                    $("#txtCodigo").removeClass("enfoco");
+                    $("#txtDescripcion").removeClass("enfoco");
+                    $("#ddlEstado").removeClass("enfoco");
+
+                    $("#txtNombre").removeClass("error");
+                    $("#txtCodigo").removeClass("error");
+                    $("#txtDescripcion").removeClass("error");
+                    $("#ddlEstado").removeClass("error");
+
+
                     if (esGuardar == null) {
+                        $("#txtCodigo").attr("disabled", -1);
                         $("#txtNombre").attr("disabled", -1);
                         $("#txtDescripcion").attr("disabled", -1);
                         $("#ddlEstado").attr("disabled", -1);
                     }
                     else {
+                        $("#txtCodigo").removeAttr("disabled");
                         $("#txtNombre").removeAttr("disabled");
                         $("#txtDescripcion").removeAttr("disabled");
                         $("#ddlEstado").removeAttr("disabled");
@@ -131,13 +146,14 @@ $(window).load(function () {
 
                 if (listado.length > 0) {
                     var id = listado[0].PK;
+                    var codigo = listado[0].Codigo;
                     var nombre = listado[0].Nombre;
                     var descripcion = listado[0].Descripcion;
                     var estado = listado[0].Estado;
 
                     llave = id;
                     estado = 3;
-                    Guardar(nombre, descripcion, estado);
+                    Guardar(codigo,nombre, descripcion, estado);
                     
                 }
                 else {
@@ -215,19 +231,22 @@ $(window).load(function () {
                 for (var j = 0; j < columnCount; j++) {
                     var cell = row.insertCell(-1);
 
-                    if (j == 2) {
+                    if (j == 3) {
                         cell.appendChild(crearEnlace(listado[i].PK, "Editar"));
                     }
-                    else if (j == 3) {
+                    else if (j == 4) {
                         cell.appendChild(crearEnlace(listado[i].PK, "Ver"));
                     }
-                    else if (j == 4) {
+                    else if (j == 5) {
                         cell.appendChild(crearEnlace(listado[i].PK, "Borrar"));
                     }
                     else if (j == 0) {
-                        cell.innerHTML = listado[i].Nombre;
+                        cell.innerHTML = listado[i].Codigo;
                     }
                     else if (j == 1) {
+                        cell.innerHTML = listado[i].Nombre;
+                    }
+                    else if (j == 2) {
                         cell.innerHTML = listado[i].Descripcion;
                     }
                 }
@@ -346,9 +365,9 @@ $(window).load(function () {
     agregar.addEventListener("click", abrirFormularioNuevo, false);
     buscar.addEventListener("click", ejecutarBusqueda, false);
     refrescar.addEventListener("click", ejecutarRefrescar, false);
-    guardar.addEventListener("click", accionCrud, false);
+    //guardar.addEventListener("click", accionCrud, false);
 
-    function accionCrud() {
+    /*function accionCrud() {
         //captura los campos para formar el objeto
         var nombre = $("#txtNombre").val();
         var descripcion = $("#txtDescripcion").val();
@@ -359,23 +378,25 @@ $(window).load(function () {
 
         //guardar
         if (esGuardar == true) {
-            Guardar(nombre, descripcion, estado);
+            Guardar(codigo,nombre, descripcion, estado);
             //getData((paginaActual-1)*paginacion,paginacion);
         } else if (esGuardar == false) {//editar
-            Guardar(nombre, descripcion, estado);
+            Guardar(codigo,nombre, descripcion, estado);
             //getData((paginaActual - 1) * paginacion, paginacion);
         }
         else if (esGuardar == null) {
             $("#formulario").dialog("close");
         }
-    }
+    }*/
 
     function abrirFormularioNuevo() {
-        $('#exampleModal').modal('show');
+        //$('#exampleModal').modal('show');
         esGuardar = true;
+        $("#txtCodigo").val("");
         $("#txtNombre").val("");
         $("#txtDescripcion").val("");
         $("#ddlEstado").val(0);
+        $("#txtCodigo").removeAttr("disabled");
         $("#txtNombre").removeAttr("disabled");
         $("#txtDescripcion").removeAttr("disabled");
         $("#ddlEstado").removeAttr("disabled");
@@ -400,7 +421,7 @@ $(window).load(function () {
     //dialogo del formulario
     $('#formulario').dialog({
         autoOpen: false,
-        height: 340,
+        height: 355,
         width: 400,
         modal: true,
         buttons: {
@@ -409,6 +430,7 @@ $(window).load(function () {
             },
             "Aceptar": function () {
                 //captura los campos para formar el objeto
+                var codigo = $("#txtCodigo").val();
                 var nombre = $("#txtNombre").val();
                 var descripcion = $("#txtDescripcion").val();
                 var estado = $("select[id=ddlEstado]").val();
@@ -416,10 +438,10 @@ $(window).load(function () {
 
                 //guardar
                 if (esGuardar == true) {                    
-                    Guardar(nombre, descripcion, estado);
+                    Guardar(codigo,nombre, descripcion, estado);
                     //getData((paginaActual-1)*paginacion,paginacion);
                 } else if (esGuardar == false) {//editar
-                    Guardar(nombre, descripcion, estado);
+                    Guardar(codigo,nombre, descripcion, estado);
                     //getData((paginaActual - 1) * paginacion, paginacion);
                 }
                 else if (esGuardar == null){
@@ -490,10 +512,10 @@ $(window).load(function () {
 
     //*************************OPERACIONES CRUD*******************
     //funcion para guardar
-    function Guardar(nombre,descripcion,estado)
+    function Guardar(codigo,nombre,descripcion,estado)
     {
-        if (validarIngreso(nombre, descripcion, estado)) {
-            var parametros = { "Pk": llave, "Nombre": nombre, "Descripcion": descripcion, "Estado": estado, "Operacion": esGuardar };
+        if (validarIngreso(codigo,nombre, descripcion, estado)) {
+            var parametros = { "Pk": llave,"Codigo": codigo, "Nombre": nombre, "Descripcion": descripcion, "Estado": estado, "Operacion": esGuardar };
 
             $.ajax({
                 type: "POST",
@@ -519,7 +541,7 @@ $(window).load(function () {
                         getData((paginaActual - 1) * paginacion, paginacion);
                     }
                     else {
-                        alert("Por favor, verifique");
+                        mostrarMensaje(r);
                     }
                 },
                 error: function (result) {
@@ -530,40 +552,60 @@ $(window).load(function () {
     }  
 
     //**********************************VALIDACIONES**************
-    function validarIngreso(nombre,descripcion,estado)
+    function validarIngreso(codigo,nombre,descripcion,estado)
     {
+        if (codigo == "" || codigo == null) {
+            mostrarMensaje("Por favor, ingrese código.")
+            return false;
+        }
+
+        if (verificarPalabrasSQL(codigo)) {
+            mostrarMensaje("El código incluye palabras no permitidas.")
+            return false;
+        }
+
+        if (verificarCaracteresEspeciales(codigo)) {
+            mostrarMensaje("No se permite carácteres especiales en el código.");
+            return false;
+        }
+
+        if (verificarTamanio(codigo, 15)) {
+            mostrarMensaje("Código supera la longitud permitida.");
+            return false;
+        }
+
         if (nombre == "" || nombre == null) {
-            mostrarMensaje("Por favor, ingrese nombre");            
+            mostrarMensaje("Por favor, ingrese nombre.");            
             return false;
         }
 
         if (verificarPalabrasSQL(nombre)) {
-            mostrarMensaje("El nombre incluye palabras no permitidas");
+            mostrarMensaje("El nombre incluye palabras no permitidas.");
             return false;
         }
 
         if(verificarCaracteresEspeciales(nombre)){
-            mostrarMensaje("No se permiten carácteres especiales en el nombre");
+            mostrarMensaje("No se permiten carácteres especiales en el nombre.");
             return false;
         }
 
         if (verificarCaracteresEspeciales()) {
-            mostrarMensaje("No se permiten carácteres especiales en la descripción");
+            mostrarMensaje("No se permiten carácteres especiales en la descripción.");
             return false;
         }
 
         if (verificarTamanio(nombre,15)) {
-            mostrarMensaje("Nombre supera la longitud permitida");
+            mostrarMensaje("Nombre supera la longitud permitida.");
             return false;
         }
 
         if (verificarTamanio(descripcion,50)) {
-            mostrarMensaje("Descripción supera la longitud permitida");
+            mostrarMensaje("Descripción supera la longitud permitida.");
             return false;
         }
 
         if (estado <= 0) {
-            mostrarMensaje("Por seleccione un estado");
+            mostrarMensaje("Por seleccione un estado.");
             return false;
         }
         return true;

@@ -67,13 +67,23 @@
         <!--#####################################################################################################-->
         <!--*********formulario para el registro de datos*********-->
         <div id="formulario" title="Informaci&oacute;n" class="modal">            
+            
             <div class="row">
                 <input type="text" id="pk"/>
+                <div class="col-md-4">
+                    <label>Código</label>
+                </div>
+                <div class="col-md-4">
+                    <input id="txtCodigo" type="text" placeholder="Ingrese código" maxlength="25" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this); revisarObligatorio(this); revisarLongitud(this,25)" />
+                </div>
+            </div>
+
+            <div class="row">                
                 <div class="col-md-4">
                     <label>Nombre</label>
                 </div>
                 <div class="col-md-4">
-                    <input id="txtNombre" type="text" placeholder="Ingrese nombre" maxlength="20" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this); revisarObligatorio(this); revisarLongitud(this,20)" />
+                    <input id="txtNombre" type="text" placeholder="Ingrese nombre" maxlength="25" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this); revisarObligatorio(this); revisarLongitud(this,25)" />
                 </div>
             </div>
             <br />
@@ -92,8 +102,7 @@
                     <label>Categoría</label>
                 </div>
                 <div class="col-md-4">
-                    <select id="ddlCategorias" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this)">
-                        
+                    <select id="ddlCategorias" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this)">                        
                     </select>
                 </div>
             </div>

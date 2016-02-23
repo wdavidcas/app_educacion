@@ -219,6 +219,25 @@ namespace DAL
             }            
         }
 
+        /// <summary>
+        /// verifica la existencia de un objeto con el mismo CODIGO
+        /// </summary>
+        /// <param name="codigo">codigo del objeto del modelo</param>
+        /// <returns></returns>
+        public int Count(string codigo,bool operacion)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM categorianivel WHERE codigo='" + Encryption.EncryptString(codigo.ToUpper()) + "'";
+                return conexion.EjecutarQueryCount(query);
+            }
+            catch (Exception ex)
+            {
+                this.Error = ex.Message.ToString();
+                return 0;
+            }
+        }
+
         #endregion
 
         #region LIST
