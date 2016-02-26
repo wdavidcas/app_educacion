@@ -339,7 +339,7 @@ namespace DAL
                 ModelNivel nivel;
                 ModelCredenciales credenciales = new ModelCredenciales();
                 Conexion conexion = new Conexion(credenciales);
-                listado = conexion.EjecutarSelect("SELECT id,nombre,descripcion,estado,CategoriaNivel_id FROM nivel WHERE id=" + PK + " AND estado<>" + (int)Estados.Tipos.Eliminado + "");
+                listado = conexion.EjecutarSelect("SELECT id,codigo,nombre,descripcion,estado,CategoriaNivel_id FROM nivel WHERE id=" + PK + " AND estado<>" + (int)Estados.Tipos.Eliminado + "");
 
                 foreach (DataRow fila in listado.Rows)
                 {
