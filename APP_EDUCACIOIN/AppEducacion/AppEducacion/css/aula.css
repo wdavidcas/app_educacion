@@ -33,8 +33,10 @@ body {
 }
 
 .errorAula {
-    background-color:yellow;
-    border:1px solid red;
+    /*background-color:yellow;
+    border:1px solid red;*/
+    font-size:xx-large;
+    text-align:center;
 }
 
 

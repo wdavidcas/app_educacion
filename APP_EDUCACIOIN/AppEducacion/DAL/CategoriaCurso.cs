@@ -119,7 +119,7 @@ namespace DAL
                     parametros.Add(paramId);
                 }
                 else{
-                    query="INSERT INTO categoria(nombre,descripcion,estado,estado) VALUES(@nombre,@descripcion,@estado,@user)";
+                    query="INSERT INTO categoria(nombre,descripcion,estado,user) VALUES(@nombre,@descripcion,@estado,@user)";
                 }
                 MySqlParameter paramNombre = new MySqlParameter("nombre",Encryption.EncryptString(categoria.Nombre));
                 parametros.Add(paramNombre);
@@ -190,6 +190,27 @@ namespace DAL
             }
         }
 
+
+        /// <summary>
+        /// retorna la cantidad de registros encontrados en el query de listado
+        /// </summary>
+        /// <param name="busqueda">filtro de búsqueda</param>
+        /// <param name="estado">estado</param>
+        /// <returns></returns>
+        public int Count(string busqueda)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM categoria WHERE nombre='"+busqueda.ToUpper().Trim()+"' AND estado<>" + (int)Estados.Tipos.Eliminado + "";
+                return conexion.EjecutarQueryCount(query);                
+            }
+            catch (Exception ex)
+            {
+                this.Error = ex.Message.ToString();
+                return 0;
+            }
+        }
+
         #endregion
 
         #region LIST
@@ -216,6 +237,38 @@ namespace DAL
             catch (Exception ex)
             {
                 lista.Add(new ModelCategoriaCurso(0,ex.Message.ToString(),ex.Message.ToString(),0,ex.Message.ToString()));
+                return lista;
+            }
+        }
+
+        /// <summary>
+        /// lista los elementos del modelo
+        /// </summary>
+        /// <param name="estado">estado</param>
+        /// <param name="orden">orden a ordenar [ASC o DESC]</param>
+        /// <param name="campoOrden">campo sobre el cual se ordenaran los datos [Campo del modelo]</param>
+        /// <returns></returns>
+        public List<ModelCategoriaCurso> Listar(int estado, string orden, string campoOrden)
+        {
+            List<ModelCategoriaCurso> lista = new List<ModelCategoriaCurso>();
+            try
+            {
+                ModelCategoriaCurso modelo;
+                listado.Clear();
+                ModelCredenciales credenciales = new ModelCredenciales();
+                Conexion conexion = new Conexion(credenciales);
+                listado = conexion.EjecutarSelect("SELECT id,nombre,descripcion,estado FROM categoria WHERE estado=" + estado + " AND estado<>" + (int)Estados.Tipos.Eliminado + " ORDER BY '"+campoOrden+"' '"+orden+"'");
+
+                foreach (DataRow fila in listado.Rows)
+                {
+                    modelo = new ModelCategoriaCurso(Convert.ToInt32(fila["id"].ToString()), Encryption.DecryptString(fila["nombre"].ToString()), Encryption.DecryptString(fila["descripcion"].ToString()), Convert.ToInt32(fila["estado"]));
+                    lista.Add(modelo);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                lista.Add(new ModelCategoriaCurso(0, ex.Message.ToString(), ex.Message.ToString(), 0, ex.Message.ToString()));
                 return lista;
             }
         }

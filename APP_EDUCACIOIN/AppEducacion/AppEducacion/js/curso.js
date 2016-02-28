@@ -17,10 +17,10 @@ $(window).load(function () {
     var tamanioPagina = Math.floor(cantidadRegistros / paginacion);
     //arrays para el  nombre del encabezado
     var headColumnas = new Array();
-    headColumnas.push(["NOMBRE", "DESCRIPCION", "EDIFIICO", "EDITAR", "VER", "BORRAR"]);
+    headColumnas.push(["CODIGO","NOMBRE","CREDITOS", "DESCRIPCION", "EDITAR", "VER", "BORRAR"]);
     //array para el ancho de las columnas
     var widthColumnas = new Array();
-    widthColumnas.push([30, 25, 21, 8, 8, 8]);
+    widthColumnas.push([10,25,10, 34, 7, 7, 7]);
 
     //**************************CONTENIDO INICIAL HTML********************************
     $("#ddlEstados").val(1);
@@ -37,15 +37,57 @@ $(window).load(function () {
     //realiza el conteo de los registros
     getCount();
     getData(0, paginacion);
-    getEdificios();
+    getCategoriasCurso();
+    getCategoriasNivel();
+    getNiveles(1);
 
     //*************************PETICIONES AJAX****************************************
+    function getNiveles(categoriaNivel)
+    {
+        var parametros = { "CategoriaNivelId": categoriaNivel, "Estado": 1, "Orden": "ASC", "CampoOrden": "Nombre" };
+
+        $.ajax({
+            type: "post",
+            url: "Nivel.aspx/ObtenerListado",
+            data: JSON.stringify(parametros),
+            async: false,
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response)
+            {
+                //se captura el listado
+                var listado = (typeof response.d) == 'string' ?
+                                           eval('(' + response.d + ')') :
+                                           response.d;
+                var combo = document.getElementById("ddlNiveles");
+                var opcion = document.createElement("OPTION");
+                opcion.value = 0;
+                opcion.textContent = "::Seleccione nivel::";
+                combo.appendChild(opcion);
+                if (listado.length > 0) {
+
+                    for (var i = 0; i < listado.length; i++) {
+                        var opcion = document.createElement("OPTION");
+                        opcion.value = listado[i].PK;
+                        opcion.textContent = listado[i].Nombre;
+                        combo.appendChild(opcion);
+                    }
+                }
+
+            },
+            error: function (result) {
+                alert('ERROR'+result.status+' '+result.statusText);
+            }
+
+
+        });
+    }
     //funcion para llenar el combo box
-    function getEdificios() {
+    function getCategoriasNivel() {
         var parametros = { "Estado": 1, "Orden": "ASC", "CampoOrden": "Nombre" };
         $.ajax({
             type: "POST",
-            url: "Modulo.aspx/ObtenerEdificios",
+            url: "Nivel.aspx/ObtenerCategoriasNivel",
             data: JSON.stringify(parametros),
             async: false,
             contentType: "application/json; charset=utf-8",
@@ -56,10 +98,48 @@ $(window).load(function () {
                                            eval('(' + response.d + ')') :
                                            response.d;
 
-                var combo = document.getElementById("ddlEdificios");
+                var combo = document.getElementById("ddlCategoriasNivel");
                 var opcion = document.createElement("OPTION");
                 opcion.value = 0;
-                opcion.textContent = "::Seleccione edificio";
+                opcion.textContent = "::Seleccione categoría::";
+                combo.appendChild(opcion);
+                if (listado.length > 0) {
+
+                    for (var i = 0; i < listado.length; i++) {
+                        var opcion = document.createElement("OPTION");
+                        opcion.value = listado[i].PK;
+                        opcion.textContent = listado[i].Nombre;
+
+                        combo.appendChild(opcion);
+                    }
+                }
+            },
+            error: function (result) {
+                alert('ERROR ' + result.status + ' ' + result.statusText);
+            }
+        });
+    }
+
+    //funcion para llenar el combo box
+    function getCategoriasCurso() {
+        var parametros = { "Estado": 1, "Orden": "ASC", "CampoOrden": "Nombre" };
+        $.ajax({
+            type: "POST",
+            url: "CategoriaCurso.aspx/ObtenerListado",
+            data: JSON.stringify(parametros),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                //se captura el listado
+                var listado = (typeof response.d) == 'string' ?
+                                           eval('(' + response.d + ')') :
+                                           response.d;
+
+                var combo = document.getElementById("ddlCategoriasCurso");
+                var opcion = document.createElement("OPTION");
+                opcion.value = 0;
+                opcion.textContent = "::Seleccione categoria::";
                 combo.appendChild(opcion);
                 if (listado.length > 0) {
 
@@ -88,7 +168,7 @@ $(window).load(function () {
         //llamada ajax
         $.ajax({
             type: "POST",
-            url: "Modulo.aspx/ObtenerListado",
+            url: "Curso.aspx/ObtenerListado",
             data: JSON.stringify(param),
             async: false,
             contentType: "application/json; charset=utf-8",
@@ -200,7 +280,7 @@ $(window).load(function () {
 
         $.ajax({
             type: "POST",
-            url: "Modulo.aspx/ObtenerCount",
+            url: "Curso.aspx/ObtenerCount",
             data: JSON.stringify(param),
             contentType: "application/json;charset=utf-8",
             dataType: "json",
@@ -255,23 +335,26 @@ $(window).load(function () {
                 for (var j = 0; j < columnCount; j++) {
                     var cell = row.insertCell(-1);
 
-                    if (j == 3) {
+                    if (j == 4) {
                         cell.appendChild(crearEnlace(listado[i].PK, "Editar"));
                     }
-                    else if (j == 4) {
+                    else if (j == 5) {
                         cell.appendChild(crearEnlace(listado[i].PK, "Ver"));
                     }
-                    else if (j == 5) {
+                    else if (j == 6) {
                         cell.appendChild(crearEnlace(listado[i].PK, "Borrar"));
                     }
                     else if (j == 0) {
-                        cell.innerHTML = listado[i].Nombre;
+                        cell.innerHTML = listado[i].CodigoMineduc;
                     }
                     else if (j == 1) {
-                        cell.innerHTML = listado[i].Descripcion;
+                        cell.innerHTML = listado[i].Nombre;
                     }
                     else if (j == 2) {
-                        cell.innerHTML = listado[i].EdificioNombre;
+                        cell.innerHTML = listado[i].Creditos;
+                    }
+                    else if (j == 3) {
+                        cell.innerHTML = listado[i].Descripcion;
                     }
                 }
             }
@@ -421,8 +504,8 @@ $(window).load(function () {
     //dialogo del formulario
     $('#formulario').dialog({
         autoOpen: false,
-        height: 380,
-        width: 400,
+        height: 540,
+        width: 425,
         modal: true,
         buttons: {
             "Cerrar": function () {

@@ -293,14 +293,20 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="catalogos\" />
     <Folder Include="frameworks\jquery\images\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{d66ae52a-679d-48db-83c4-f0a3d720198b}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{60d4d19e-e806-4d10-80a7-4dec4eeb2072}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

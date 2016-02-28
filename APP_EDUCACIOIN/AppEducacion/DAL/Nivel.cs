@@ -320,7 +320,7 @@ namespace DAL
                 ModelNivel nivel;
                 ModelCredenciales credenciales = new ModelCredenciales();
                 Conexion conexion = new Conexion(credenciales);
-                listado = conexion.EjecutarSelect("SELECT id,nombre,descripcion,estado,CategoriaNivel_id FROM nivel WHERE id=" + PK + " AND estado<>" + (int)Estados.Tipos.Eliminado + "");
+                listado = conexion.EjecutarSelect("SELECT id,codigo,nombre,descripcion,estado,CategoriaNivel_id FROM nivel WHERE id=" + PK + " AND estado<>" + (int)Estados.Tipos.Eliminado + "");
 
                 foreach (DataRow fila in listado.Rows)
                 {
@@ -332,6 +332,39 @@ namespace DAL
             }
             catch (Exception ex) {                
                 ModelNivel nivel = new ModelNivel(0,string.Empty, string.Empty, string.Empty, 0,0,ex.Message.ToString());
+                lista.Add(nivel);
+                return lista;
+            }
+        }
+
+        /// <summary>
+        /// lista los elementos del modelo
+        /// </summary>
+        /// <param name="estado">estado</param>
+        /// <param name="orden">orden a ordenar [ASC o DESC]</param>
+        /// <param name="campoOrden">campo sobre el cual se ordenaran los datos [Campo del modelo]</param>
+        /// <returns></returns>
+        public List<ModelNivel> Listar(int CategoriaNivelId,int estado, string orden, string campoOrden)
+        {
+            List<ModelNivel> lista = new List<ModelNivel>();
+            try
+            {
+                ModelNivel modelo;
+                listado.Clear();
+                ModelCredenciales credenciales = new ModelCredenciales();
+                Conexion conexion = new Conexion(credenciales);
+                listado = conexion.EjecutarSelect("SELECT id,codigo,nombre,descripcion,estado,CategoriaNivel_id FROM nivel WHERE estado="+estado+" AND CategoriaNivel_id="+CategoriaNivelId+" ORDER BY '"+campoOrden+"' '"+orden+"'");
+
+                foreach (DataRow fila in listado.Rows)
+                {
+                    modelo = new ModelNivel(Convert.ToInt32(fila["id"].ToString()), Encryption.DecryptString(fila["codigo"].ToString()), Encryption.DecryptString(fila["nombre"].ToString()), Encryption.DecryptString(fila["descripcion"].ToString()), Convert.ToInt32(fila["estado"]), Convert.ToInt32(fila["CategoriaNivel_id"]));
+                    lista.Add(modelo);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                ModelNivel nivel = new ModelNivel(0, string.Empty, string.Empty, string.Empty, 0, 0, ex.Message.ToString());
                 lista.Add(nivel);
                 return lista;
             }

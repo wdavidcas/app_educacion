@@ -55,6 +55,20 @@ namespace AppEducacion
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Estado"></param>
+        /// <param name="Orden"></param>
+        /// <param name="CampoOrden"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public static List<ModelNivel> ObtenerListado(int CategoriaNivelId,int Estado, string Orden, string CampoOrden)
+        {
+            ControllerNivel controlador = new ControllerNivel();
+            return controlador.Listar(CategoriaNivelId,Estado, Orden, CampoOrden);
+        }
+
+        /// <summary>
         /// Recupera la informacion de un objeto
         /// </summary>
         /// <param name="PK"> identificador</param>
@@ -112,13 +126,14 @@ namespace AppEducacion
             int cant = edificio.Count(TextoBusqueda, Estado);
             return cant;
         }
-        #endregion
+    
 
         [WebMethod]
         public static List<ModelCategoriaNivel> ObtenerCategoriasNivel(int Estado,string Orden,string CampoOrden) {
             ControllerCategoriaNivel categoria = new ControllerCategoriaNivel();
             return categoria.Listar(Estado, Orden, CampoOrden);
         }
+        #endregion
         #region VALIDACIONES
 
         /// <summary>

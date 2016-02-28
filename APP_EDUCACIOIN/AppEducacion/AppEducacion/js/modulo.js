@@ -59,7 +59,7 @@ $(window).load(function () {
                 var combo = document.getElementById("ddlEdificios");
                 var opcion = document.createElement("OPTION");
                 opcion.value = 0;
-                opcion.textContent = "::Seleccione edificio";
+                opcion.textContent = "::Seleccione edificio::";
                 combo.appendChild(opcion);
                 if (listado.length > 0) {
 
@@ -136,6 +136,14 @@ $(window).load(function () {
                         $("#txtDescripcion").attr("disabled", -1);
                         $("#ddlEstado").attr("disabled", -1);
                         $("#ddlEdificios").attr("disabled", -1);
+                        $("#txtNombre").removeClass("enfoco");
+                        $("#txtDescripcion").removeClass("enfoco");
+                        $("#ddlEstado").removeClass("enfoco");
+                        $("#ddlEdificios").removeClass("enfoco");
+                        $("#txtNombre").removeClass("error");
+                        $("#txtDescripcion").removeClass("error");
+                        $("#ddlEstado").removeClass("error");
+                        $("#ddlEdificios").removeClass("error");
                     }
                     else {
                         $("#txtNombre").removeAttr("disabled");
@@ -513,7 +521,7 @@ $(window).load(function () {
     //*************************OPERACIONES CRUD*******************
     //funcion para guardar
     function Guardar(nombre, descripcion, estado, edificio) {
-        if (validarIngreso(nombre, descripcion, estado)) {
+        if (validarIngreso(nombre, descripcion, estado,edificio)) {
             var parametros = { "Pk": llave, "Nombre": nombre, "Descripcion": descripcion, "Estado": estado, "Edificio_Id": edificio, "Operacion": esGuardar };
 
             $.ajax({
@@ -551,11 +559,49 @@ $(window).load(function () {
     }
 
     //**********************************validaciones**************
-    function validarIngreso(nombre, descripcion, estado) {
+    function validarIngreso(nombre, descripcion, estado,edificio) {
         if (nombre == "" || nombre == null) {
             mostrarMensaje("Por favor, ingrese nombre");
             return false;
         }
+
+        if (verificarTamanio(nombre,25)) {
+            mostrarMensaje("Nombre supera la longitud permitida.");
+            return false;
+        }
+
+        if (verificarPalabrasSQL(nombre))
+        {
+            mostrarMensaje("El nombre contiene palabras no permitidas.");
+            return false;
+        }
+
+        if (verificarCaracteresEspeciales(nombre))
+        {
+            mostrarMensaje("No se permiten caracteres especiales en el nombre");
+            return false;
+        }
+
+        if (verificarTamanio(descripcion, 50)) {
+            mostrarMensaje("La descripción supera la longitud permitida");
+            return false;
+        }
+
+        if (verificarPalabrasSQL(descripcion)) {
+            mostrarMensaje("La descripción incluye palabras no permitidas.");
+            return false;
+        }
+
+        if (verificarCaracteresEspeciales(descripcion)) {
+            mostrarMensaje("No se permiten carácteres especiales en la descripción.");
+            return false;
+        }
+
+        if (edificio < 0) {
+            mostrarMensaje("Debe seleccionar un edificio.");
+            return false;
+        }
+
         if (estado <= 0) {
             mostrarMensaje("Por seleccione un estado");
             return false;

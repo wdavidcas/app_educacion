@@ -157,13 +157,13 @@ namespace DAL
                 if (!Operacion)
                 {
                     MySqlParameter paramPk = new MySqlParameter("id", curso.PK);
-                    query = "UPDATE CURSO SET nombre=@nombre,descripcion=@descripcion,estado=@estado,creditos=@creditos,Nivel_id=@nivel,categoriaCurso_id=@categoriaCurso WHERE id=@id";
+                    query = "UPDATE CURSO SET nombre=@nombre,descripcion=@descripcion,estado=@estado,creditos=@creditos,Nivel_id=@nivel,categoriaCurso_id=@categoriaCurso,user=@user WHERE id=@id";
                     MySqlParameter paramId = new MySqlParameter("id", curso.PK);
                     parametros.Add(paramId);
                 }
                 else
                 {
-                    query = "INSERT INTO CURSO(nombre,descripcion,estado,creditos,Nivel_Id,categoriaCurso_id) VALUES(@nombre,@descripcion,@estado,@creditos,@nivel,@categoriaCurso)";
+                    query = "INSERT INTO CURSO(nombre,descripcion,estado,creditos,Nivel_Id,categoriaCurso_id,codigoMineduc,user) VALUES(@nombre,@descripcion,@estado,@creditos,@nivel,@categoriaCurso,@codigoMineduc,@user)";
                 }
                 MySqlParameter paramNombre = new MySqlParameter("nombre", Encryption.EncryptString(curso.Nombre));
                 parametros.Add(paramNombre);
@@ -177,6 +177,8 @@ namespace DAL
                 parametros.Add(paramNivel);
                 MySqlParameter paramCategoriaCurso = new MySqlParameter("categoriaCurso",curso.Categoriacurso_Id);
                 parametros.Add(paramCategoriaCurso);
+                MySqlParameter paramCodigo = new MySqlParameter("codigoMineduc", curso.CodigoMineduc);
+                parametros.Add(paramCodigo);
 
                 bool respuesta = conexion.EjecutarQuery(query, parametros);
                 this.Error = conexion.Error;
@@ -242,6 +244,34 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// retorna la cantidad de registros encontrados en el query de listado
+        /// </summary>
+        /// <param name="busqueda">filtro de búsqueda</param>
+        /// <param name="estado">estado</param>
+        /// <returns></returns>
+        public int Count(string busqueda, int estado,int nivel,int categoria,bool campoValidar)
+        {
+            try
+            {
+                if (campoValidar)//valida el nombre
+                {
+                    string query = "SELECT COUNT(*) FROM CURSO WHERE estado=" + estado + " AND Categoria_id=" + categoria + " AND nivel_id=" + nivel + " AND nombre='" + busqueda.Trim().ToUpper() + "' AND estado<>" + (int)Estados.Tipos.Eliminado + "";
+                    return conexion.EjecutarQueryCount(query);
+                }
+                else//valida codigo
+                {
+                    string query = "SELECT COUNT(*) FROM CURSO WHERE estado=" + estado + " AND Categoria_id=" + categoria + " AND nivel_id=" + nivel + " AND codigoMineduc='" + busqueda.Trim().ToUpper() + "' AND estado<>" + (int)Estados.Tipos.Eliminado + "";
+                    return conexion.EjecutarQueryCount(query);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Error = ex.Message.ToString();
+                return 0;
+            }
+        }
+
         #endregion
 
         #region LIST
@@ -256,12 +286,12 @@ namespace DAL
             {
                 ModelCurso curso;
                 listado.Clear();
-                listado = conexion.EjecutarSelect(@"SELECT c.id,c.CodigoMineduc,c.nombre,c.descripcion,c.estado,c.credios,c.Nivel_Id,n.Nombre as NivelName,c.CategoriaCurso_Id,cc.NOmbre as CategoriaName FROM CURSO c 
+                listado = conexion.EjecutarSelect(@"SELECT c.id,c.CodigoMineduc,c.nombre,c.descripcion,c.estado,c.creditos,c.Nivel_Id,n.Nombre as NivelName,c.Categoria_Id,cc.NOmbre as CategoriaName FROM CURSO c 
                 INNER JOIN Nivel n ON n.id=c.Nivel_Id INNER JOIN Categoria cc ON cc.id=c.Categoria_Id WHERE c.estado=" + estado + " AND c.estado<>" + (int)Estados.Tipos.Eliminado + " ORDER BY c.nombre ASC limit " + inicio + "," + paginacion + " ");
 
                 foreach (DataRow fila in listado.Rows)
                 {
-                    curso = new ModelCurso(Convert.ToInt32(fila["id"].ToString()),Encryption.DecryptString(fila["CodigoMineduc"].ToString()),Encryption.DecryptString(fila["nombre"].ToString()), Encryption.DecryptString(fila["descripcion"].ToString()), Convert.ToInt32(fila["estado"]),Convert.ToInt32(fila["creditos"]),Convert.ToInt32(fila["Nivel_Id"]),Convert.ToInt32(fila["CategoriaCurso_Id"]),Encryption.DecryptString(fila["NivelName"].ToString()),Encryption.DecryptString(fila["CategoriaName"].ToString()));
+                    curso = new ModelCurso(Convert.ToInt32(fila["id"].ToString()),Encryption.DecryptString(fila["CodigoMineduc"].ToString()),Encryption.DecryptString(fila["nombre"].ToString()), Encryption.DecryptString(fila["descripcion"].ToString()), Convert.ToInt32(fila["estado"]),Convert.ToInt32(fila["creditos"]),Convert.ToInt32(fila["Nivel_Id"]),Convert.ToInt32(fila["Categoria_Id"]),Encryption.DecryptString(fila["NivelName"].ToString()),Encryption.DecryptString(fila["CategoriaName"].ToString()));
                     lista.Add(curso);
                 }
                 return lista;
@@ -290,12 +320,12 @@ namespace DAL
                 listado.Clear();
                 ModelCredenciales credenciales = new ModelCredenciales();
                 Conexion conexion = new Conexion(credenciales);
-                listado = conexion.EjecutarSelect(@"SELECT c.id,c.CodigoMineduc,c.nombre,c.descripcion,c.estado,c.creditos,c.Nivel_Id,n.Nombre as NivelName,c.CategoriaCurso_Id,cc.Nombre as CategoriaName FROM curso 
+                listado = conexion.EjecutarSelect(@"SELECT c.id,c.CodigoMineduc,c.nombre,c.descripcion,c.estado,c.creditos,c.Nivel_Id,n.Nombre as NivelName,c.Categoria_Id,cc.Nombre as CategoriaName FROM curso 
                 INNER JOIN Nivel n ON n.id=c.Nivel_Id INNER JOIN Categoria cc ON cc.id=c.Categoria_Id WHERE c.estado=" + estado + " AND (c.nombre LIKE'%" + Encryption.EncryptString(busqueda) + "%' OR c.descripcion LIKE '%" + Encryption.EncryptString(busqueda) + "%') AND (c.estado<>" + (int)Estados.Tipos.Eliminado + ") ORDER BY c.nombre ASC LIMIT " + paginacion + "");
 
                 foreach (DataRow fila in listado.Rows)
                 {
-                    curso = new ModelCurso(Convert.ToInt32(fila["id"].ToString()), Encryption.DecryptString(fila["CodigoMineduc"].ToString()), Encryption.DecryptString(fila["nombre"].ToString()), Encryption.DecryptString(fila["descripcion"].ToString()), Convert.ToInt32(fila["estado"]), Convert.ToInt32(fila["creditos"]), Convert.ToInt32(fila["Nivel_Id"]), Convert.ToInt32(fila["CategoriaCurso_Id"]), Encryption.DecryptString(fila["NivelName"].ToString()), Encryption.DecryptString(fila["CategoriaName"].ToString()));
+                    curso = new ModelCurso(Convert.ToInt32(fila["id"].ToString()), Encryption.DecryptString(fila["CodigoMineduc"].ToString()), Encryption.DecryptString(fila["nombre"].ToString()), Encryption.DecryptString(fila["descripcion"].ToString()), Convert.ToInt32(fila["estado"]), Convert.ToInt32(fila["creditos"]), Convert.ToInt32(fila["Nivel_Id"]), Convert.ToInt32(fila["Categoria_Id"]), Encryption.DecryptString(fila["NivelName"].ToString()), Encryption.DecryptString(fila["CategoriaName"].ToString()));
                     lista.Add(curso);
                 }
                 return lista;

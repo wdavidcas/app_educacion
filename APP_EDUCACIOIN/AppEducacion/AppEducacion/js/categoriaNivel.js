@@ -547,7 +547,7 @@ $(window).load(function () {
             return false;
         }
 
-        if (verificarCaracteresEspeciales()) {
+        if (verificarCaracteresEspeciales(descripcion)) {
             mostrarMensaje("No se permiten carácteres especiales en la descripción");
             return false;
         }

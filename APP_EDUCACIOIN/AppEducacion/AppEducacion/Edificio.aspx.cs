@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using DAL;
+using BLL;
 
 namespace AppEducacion
 {
@@ -58,13 +59,26 @@ namespace AppEducacion
         /// Recupera la informacion de un objeto
         /// </summary>
         /// <param name="PK"> identificador</param>
-        /// <returns>objeto Categoria Nivel</returns>
+        /// <returns>objeto de edificio</returns>
         [WebMethod]
         public static List<ModelEdificio> Get(int PK)
         {
             List<ModelEdificio> lista = new List<ModelEdificio>();
             ControllerEdificio edificio = new ControllerEdificio();
             return edificio.Listar(PK);
+        }
+
+        /// <summary>
+        /// Recupera la informacion de un objeto
+        /// </summary>
+        /// <param name="Modulo">Modulo</param>
+        /// <returns>objeto de edificio</returns>
+        [WebMethod]
+        public static List<ModelEdificio> GetPorModulo(int Modulo)
+        {
+            List<ModelEdificio> lista = new List<ModelEdificio>();
+            ControllerEdificio edificio = new ControllerEdificio();
+            return edificio.ListarPorModulo(Modulo);
         }
 
         /// <summary>
@@ -91,12 +105,12 @@ namespace AppEducacion
         {
             ModelEdificio miEdificio = new ModelEdificio(Pk, Nombre, Descripcion, Estado);
             ControllerEdificio edificio = new ControllerEdificio();
-            if (validarCategoriaNivel(miEdificio, Operacion))
+            if (ValidarModelo(miEdificio, Operacion))
             {
                 return edificio.Insertar(miEdificio, Operacion);
             }
             else
-                return edificio.Error;
+                return Error;
         }
 
         /// <summary>
@@ -121,13 +135,57 @@ namespace AppEducacion
         /// </summary>
         /// <param name="categoria"></param>
         /// <returns></returns>
-        static bool validarCategoriaNivel(ModelEdificio edificio, bool Operacion)
+        static bool ValidarModelo(ModelEdificio edificio, bool Operacion)
         {
+            ControllerEdificio controlador = new ControllerEdificio();
+
             if (string.IsNullOrEmpty(edificio.Nombre))
             {
-                Error = "Nombre vacío";
+                Error = "Por favor, ingrese nombre del edificio.";
                 return false;
             }
+
+            if (edificio.Nombre.Trim().Length > 50) 
+            {
+                Error="El nombre supera la longitud permitida.";
+                return false;
+            }
+
+            if (!Operacion && controlador.Count(edificio.Nombre.Trim().ToUpper()) > 0) 
+            {
+                Error = "Existe un edificio con el mismo nombre.";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(edificio.Nombre.Trim())) 
+            {
+                Error = "El nombre incluye palabras no permitidas.";
+                return false;
+            }
+
+            /*if (Validador.VerificarCaracteresEspeciales(edificio.Nombre.Trim()))
+            {
+                Error = "No se permiten carácteres especiales en el nombre";
+                return false;
+            }*/
+
+            if (edificio.Descripcion.Trim().Length > 50) {
+                Error = "La descripción supera la longitud permitida";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(edificio.Descripcion.Trim()))
+            {
+                Error = "La descripción incluye palabras no permitidas.";
+                return false;
+            }
+
+            /*if(Validador.VerificarCaracteresEspeciales(edificio.Descripcion.Trim()))
+            {
+                Error = "No se permiten caracteres especiales en la descripción.";
+                return false;
+            }*/
+
             if (edificio.Estado <= 0)
             {
                 Error = "Estado no permitido";

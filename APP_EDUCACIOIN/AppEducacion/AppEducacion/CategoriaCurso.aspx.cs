@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using DAL;
+using BLL;
 
 namespace AppEducacion
 {
@@ -55,6 +56,20 @@ namespace AppEducacion
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Estado"></param>
+        /// <param name="Orden"></param>
+        /// <param name="CampoOrden"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public static List<ModelCategoriaCurso> ObtenerListado(int Estado, string Orden, string CampoOrden)
+        {
+            ControllerCategoriaCurso controlador = new ControllerCategoriaCurso();
+            return controlador.Listar(Estado, Orden, CampoOrden);
+        }
+
+        /// <summary>
         /// Recupera la informacion de un objeto
         /// </summary>
         /// <param name="PK"> identificador</param>
@@ -96,7 +111,7 @@ namespace AppEducacion
                 return categoria.Insertar(miCategoria, Operacion);
             }
             else
-                return categoria.Error;
+                return Error;
         }
 
         /// <summary>
@@ -123,11 +138,56 @@ namespace AppEducacion
         /// <returns></returns>
         static bool validarCategoriaNivel(ModelCategoriaCurso categoria, bool Operacion)
         {
+            ControllerCategoriaCurso controlador = new ControllerCategoriaCurso();
+
             if (string.IsNullOrEmpty(categoria.Nombre))
             {
-                Error = "Nombre vacío";
+                Error = "Por favor, ingrese nombre del edificio.";
                 return false;
             }
+
+            if (categoria.Nombre.Trim().Length > 25)
+            {
+                Error = "El nombre supera la longitud permitida.";
+                return false;
+            }
+            
+            if (!Operacion && controlador.Count(categoria.Nombre.Trim().ToUpper()) > 0)
+            {
+                Error = "Existe un edificio con el mismo nombre.";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(categoria.Nombre.Trim()))
+            {
+                Error = "El nombre incluye palabras no permitidas.";
+                return false;
+            }
+
+            /*if (Validador.VerificarCaracteresEspeciales(edificio.Nombre.Trim()))
+            {
+                Error = "No se permiten carácteres especiales en el nombre";
+                return false;
+            }*/
+
+            if (categoria.Descripcion.Trim().Length > 50)
+            {
+                Error = "La descripción supera la longitud permitida";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(categoria.Descripcion.Trim()))
+            {
+                Error = "La descripción incluye palabras no permitidas.";
+                return false;
+            }
+
+            /*if(Validador.VerificarCaracteresEspeciales(edificio.Descripcion.Trim()))
+            {
+                Error = "No se permiten caracteres especiales en la descripción.";
+                return false;
+            }*/
+
             if (categoria.Estado <= 0)
             {
                 Error = "Estado no permitido";

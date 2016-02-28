@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using DAL;
+using BLL;
 
 namespace AppEducacion
 {
@@ -91,12 +92,12 @@ namespace AppEducacion
         {
             ModelModulo miModulo = new ModelModulo(Pk, Nombre, Descripcion, Estado, Edificio_Id);
             ControllerModulo nivel = new ControllerModulo();
-            if (validarCategoriaNivel(miModulo, Operacion))
+            if (ValidarModelo(miModulo, Operacion))
             {
                 return nivel.Insertar(miModulo, Operacion);
             }
             else
-                return nivel.Error;
+                return Error;
         }
 
         /// <summary>
@@ -127,14 +128,65 @@ namespace AppEducacion
         /// </summary>
         /// <param name="categoria"></param>
         /// <returns></returns>
-        static bool validarCategoriaNivel(ModelModulo nivel, bool Operacion)
+        static bool ValidarModelo(ModelModulo modulo, bool Operacion)
         {
-            if (string.IsNullOrEmpty(nivel.Nombre))
+            ControllerModulo controlador = new ControllerModulo();
+
+            if (string.IsNullOrEmpty(modulo.Nombre))
             {
-                Error = "Nombre vacío";
+                Error = "Por favor, ingrese nombre del módulo.";
                 return false;
             }
-            if (nivel.Estado <= 0)
+
+            if (modulo.Nombre.Trim().Length > 50)
+            {
+                Error = "El nombre supera la longitud permitida.";
+                return false;
+            }
+
+            if (controlador.Count(modulo.Nombre.Trim().ToUpper(), modulo.Edificio_Id, modulo.Estado) > 0 && !Operacion)
+            {
+                Error = "Existe un nombre de módulo vinculado al mismo edificioo y estado.";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(modulo.Nombre.Trim()))
+            {
+                Error = "El nombre incluye palabras no permitidas.";
+                return false;
+            }
+
+            /*if (Validador.VerificarCaracteresEspeciales(edificio.Nombre.Trim()))
+            {
+                Error = "No se permiten carácteres especiales en el nombre";
+                return false;
+            }*/
+
+            if (modulo.Descripcion.Trim().Length > 50)
+            {
+                Error = "La descripción supera la longitud permitida";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(modulo.Descripcion.Trim()))
+            {
+                Error = "La descripción incluye palabras no permitidas.";
+                return false;
+            }
+
+            /*if(Validador.VerificarCaracteresEspeciales(edificio.Descripcion.Trim()))
+            {
+                Error = "No se permiten caracteres especiales en la descripción.";
+                return false;
+            }*/
+
+            if (modulo.Edificio_Id < 0)
+            {
+                Error = "Debe seleccionar un edificio.";
+                return false;
+            }
+
+            if (modulo.Estado <= 0)
             {
                 Error = "Estado no permitido";
                 return false;

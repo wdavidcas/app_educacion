@@ -343,6 +343,37 @@ namespace DAL
             }
         }
 
+       /// <summary>
+       /// Retorna lista de edificios por modulo
+       /// </summary>
+       /// <param name="modulo">Id del modulo</param>
+       /// <returns></returns>
+        public List<ModelEdificio> ListarPorModulo(int modulo)
+        {
+            List<ModelEdificio> lista = new List<ModelEdificio>();
+            try
+            {
+                ModelEdificio edificio;
+                ModelCredenciales credenciales = new ModelCredenciales();
+                Conexion conexion = new Conexion(credenciales);
+                listado = conexion.EjecutarSelect("SELECT id,nombre,descripcion,estado FROM EDIFICIO WHERE id=" + modulo + " AND estado<>" + (int)Estados.Tipos.Eliminado + "");
+
+                foreach (DataRow fila in listado.Rows)
+                {
+                    edificio = new ModelEdificio(Convert.ToInt32(fila["id"].ToString()), Encryption.DecryptString(fila["nombre"].ToString()), Encryption.DecryptString(fila["descripcion"].ToString()), Convert.ToInt32(fila["estado"]));
+                    lista.Add(edificio);
+                }
+                return lista;
+
+            }
+            catch (Exception ex)
+            {
+                ModelEdificio edificio = new ModelEdificio(0, string.Empty, string.Empty, 0, ex.Message.ToString());
+                lista.Add(edificio);
+                return lista;
+            }
+        }
+
         /// <summary>
         /// Metodo para buscar los nombres de la entidad similares al dado
         /// </summary>
