@@ -67,10 +67,18 @@
         
         <!--#####################################################################################################-->
         <!--*********formulario para el registro de datos*********-->
-        <!--
+        
         <div id="formulario" title="Informaci&oacute;n de la categoría" class="modal">            
+            
             <div class="row">
                 <input type="text" id="pk"/>
+                <div class="col-md-4"><label>Código</label></div>
+                <div class="col-md-4">
+                    <input type="text" id="txtCodigo" title="Código de la categoría" placeholder="Ingrese código" maxlength="15" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this); revisarObligatorio(this); revisarLongitud(this,15);" onkeypress="convertir(this,'may')"/>
+                </div>
+            </div>
+            <br />
+            <div class="row">                
                 <div class="col-md-4">
                     <label>Nombre</label>
                 </div>
@@ -103,7 +111,7 @@
                 </div>
             </div>  
             <br />
-        </div>-->
+        </div>
         <!--********fin del formulario**********--> 
         
         <!--#####################################################################################################-->
@@ -129,7 +137,7 @@
         </div> 
     </div>
     <!--**********fin del contenedor**********-->
-
+    <!--
    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -159,5 +167,5 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 </asp:Content>

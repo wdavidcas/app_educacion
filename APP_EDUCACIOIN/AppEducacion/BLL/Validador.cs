@@ -19,9 +19,29 @@ namespace BLL
         public static bool ValidarPalabrasReservadasSQL(string Palabra) {
             try
             {
-                return Regex.IsMatch(Palabra.Trim().ToUpper(), ("(INSERT|UPDATE|DELETE|DROP|TRUNCATE|SELECT|FROM|WHERE|TOP|LIMIT,ORDER|BY|GROUP|TOP|SUM|AVG)"));                
+                //return Regex.IsMatch(Palabra.Trim().ToUpper(), ("(INSERT|UPDATE|DELETE|DROP|TRUNCATE|SELECT|FROM|WHERE|TOP|LIMIT,ORDER|BY|GROUP|TOP|SUM|AVG)"));                
+                return false;
             }
             catch (Exception ex) {
+                Error = ex.Message.ToString();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Palabra"></param>
+        /// <returns></returns>
+        public static bool ValidarCaracteresEspeciales(string Palabra)
+        {
+            try
+            {
+               // return Regex.IsMatch(Palabra.Trim().ToUpper(), ("(INSERT|UPDATE|DELETE|DROP|TRUNCATE|SELECT|FROM|WHERE|TOP|LIMIT,ORDER|BY|GROUP|TOP|SUM|AVG)"));
+                return false;
+            }
+            catch (Exception ex)
+            {
                 Error = ex.Message.ToString();
                 return false;
             }

@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using DAL;
+using BLL;
+
 
 namespace AppEducacion
 {
@@ -105,11 +107,13 @@ namespace AppEducacion
             ModelCategoriaNivel miCategoria = new ModelCategoriaNivel(Pk,Codigo,Nombre, Descripcion, Estado);
             ControllerCategoriaNivel categoria = new ControllerCategoriaNivel();
             if (validarCategoriaNivel(miCategoria, Operacion))
-            {
+            {                
                 return categoria.Insertar(miCategoria, Operacion);
             }
-            else
-                return categoria.Error;
+            else {                
+                return Error;
+            }
+                
         }        
 
         /// <summary>
@@ -139,27 +143,84 @@ namespace AppEducacion
         static bool validarCategoriaNivel(ModelCategoriaNivel categoria,bool Operacion)
         {
             ControllerCategoriaNivel controlador = new ControllerCategoriaNivel();
+            if (string.IsNullOrEmpty(categoria.Codigo)) {
+                Error = "Código vacío.";
+                return false;
+            }
+
+            if (categoria.Codigo.Length > 15) 
+            {
+                Error = "Código supera la longitud permitida.";
+                return false;
+            }
+
+            if ((controlador.Count(categoria.Codigo, false) > 0) && Operacion == true)
+            {
+                Error = "El código de la categoría ya existe";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(categoria.Codigo))
+            {
+                Error="El código contiene palabras no permitidas.";
+                return false;
+            }
+
+            if (Validador.ValidarCaracteresEspeciales(categoria.Codigo))
+            {
+                Error = "El código contiene caracteres especiales.";
+                return false;
+            }
+
             if (string.IsNullOrEmpty(categoria.Nombre))
             {
-                Error = "Nombre vacío";
+                Error = "Nombre vacío.";
                 return false;
             }
             if (categoria.Nombre.Length > 15)
             {
-                Error = "Nombre supera la longitud permitida";
+                Error = "Nombre supera la longitud permitida.";
                 return false;
             }
+
+            if ((controlador.Count(categoria.Nombre) > 0) && Operacion == true)
+            {
+                Error = "El nombre de la categoría ya existe.";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(categoria.Nombre))
+            {
+                Error = "El nombre contiene palabras no permitidas.";
+                return false;
+            }
+
+            if (Validador.ValidarCaracteresEspeciales(categoria.Nombre))
+            {
+                Error = "El nombre contiene caracteres especiales.";
+                return false;
+            }
+
             if (categoria.Descripcion.Length > 50) 
             {
-                Error = "Descripción supera la longitud permitida";
+                Error = "Descripción supera la longitud permitida.";
                 return false;
             }
-            if ((controlador.Count(categoria.Nombre) > 0) && Operacion==false) {
-                Error = "El nombre de la categoría ya existe. Verificar estado.";
+
+            if (Validador.ValidarPalabrasReservadasSQL(categoria.Descripcion) && !string.IsNullOrEmpty(categoria.Descripcion))
+            {
+                Error = "La descripción contiene palabras no permitidas.";
                 return false;
             }
+
+            if (Validador.ValidarCaracteresEspeciales(categoria.Descripcion) && !string.IsNullOrEmpty(categoria.Descripcion))
+            {
+                Error = "La descripción contiene caracteres especiales.";
+                return false;
+            }            
+
             if (categoria.Estado <= 0) {
-                Error = "Estado no permitido";
+                Error = "Estado no permitido.";
                 return false;
             }
             return true;

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using DAL;
+using BLL;
 
 namespace AppEducacion
 {
@@ -125,13 +126,19 @@ namespace AppEducacion
             ControllerNivel edificio = new ControllerNivel();
             int cant = edificio.Count(TextoBusqueda, Estado);
             return cant;
+<<<<<<< HEAD
         }
     
+=======
+        }        
+>>>>>>> 9530d7bd64783a03c5f2b69bf92d3800a36bac36
 
         [WebMethod]
         public static List<ModelCategoriaNivel> ObtenerCategoriasNivel(int Estado,string Orden,string CampoOrden) {
             ControllerCategoriaNivel categoria = new ControllerCategoriaNivel();
             return categoria.Listar(Estado, Orden, CampoOrden);
+
+        #endregion
         }
         #endregion
         #region VALIDACIONES
@@ -143,11 +150,91 @@ namespace AppEducacion
         /// <returns></returns>
         static bool validarCategoriaNivel(ModelNivel nivel, bool Operacion)
         {
+            ControllerNivel controlador = new ControllerNivel();
+            if (string.IsNullOrEmpty(nivel.Codigo))
+            {
+                Error = "Código vacío.";
+                return false;
+            }
+
+            if (nivel.Codigo.Length > 15)
+            {
+                Error = "El código supera la longitud permitida.";
+                return false;
+            }
+
+            if ((controlador.Count(nivel.Codigo, false) > 0) && Operacion == true)
+            {
+                Error = "El código de la categoría ya existe";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(nivel.Codigo))
+            {
+                Error = "El código contiene palabras no permitidas.";
+                return false;
+            }
+
+            if (Validador.ValidarCaracteresEspeciales(nivel.Codigo))
+            {
+                Error = "El código contiene caracteres especiales.";
+                return false;
+            }
+
             if (string.IsNullOrEmpty(nivel.Nombre))
             {
                 Error = "Nombre vacío";
                 return false;
             }
+
+            if (nivel.Nombre.Length > 15)
+            {
+                Error = "Nombre supera la longitud permitida.";
+                return false;
+            }
+
+            if ((controlador.Count(nivel.Nombre) > 0) && Operacion == true)
+            {
+                Error = "El nombre de la categoría ya existe.";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(nivel.Nombre))
+            {
+                Error = "El nombre contiene palabras no permitidas.";
+                return false;
+            }
+
+            if (Validador.ValidarCaracteresEspeciales(nivel.Nombre))
+            {
+                Error = "El nombre contiene caracteres especiales.";
+                return false;
+            }
+
+            if (nivel.Descripcion.Length > 50)
+            {
+                Error = "Descripción supera la longitud permitida.";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(nivel.Descripcion) && !string.IsNullOrEmpty(nivel.Descripcion))
+            {
+                Error = "La descripción contiene palabras no permitidas.";
+                return false;
+            }
+
+            if (Validador.ValidarCaracteresEspeciales(nivel.Descripcion) && !string.IsNullOrEmpty(nivel.Descripcion))
+            {
+                Error = "La descripción contiene caracteres especiales.";
+                return false;
+            }
+
+            if (nivel.CategoriaNivel_Id < 0)
+            {
+                Error="Debe seleccionar una categoría";
+                return false;
+            }
+
             if (nivel.Estado <= 0)
             {
                 Error = "Estado no permitido";
