@@ -55,6 +55,7 @@
     <Compile Include="InventarioFisico.cs" />
     <Compile Include="Libros.cs" />
     <Compile Include="Pagos.cs" />
+    <Compile Include="PrestamoLibros.cs" />
     <Compile Include="Profesiones.cs" />
     <Compile Include="Modulo.cs" />
     <Compile Include="Nivel.cs" />
