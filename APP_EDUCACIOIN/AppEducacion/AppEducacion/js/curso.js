@@ -8,6 +8,7 @@ $(window).load(function () {
     var cargandoPagina = true;
     var esGuardar = false;
     var llave = 0;
+    var CategoriaNivel = 0;
     //total de registros en la tabla
     var cantidadRegistros = 0;
     //registros a mostrar por pagina
@@ -42,6 +43,34 @@ $(window).load(function () {
     getNiveles(1);
 
     //*************************PETICIONES AJAX****************************************
+    function getCategoriaPorNivel(nivel)
+    {
+        var parametros = { "PK": nivel };
+        $.ajax({
+            type: "post",
+            url: "Nivel.aspx/Get",
+            data: JSON.stringify(parametros),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                //se captura el listado
+                var listado = (typeof response.d) == 'string' ?
+                                           eval('(' + response.d + ')') :
+                                           response.d;
+
+                if (listado.length > 0)
+                {
+                    CategoriaNivel = listado[0].CategoriaNivel_Id;
+                }
+
+            },
+            error: function (result) {
+                alert("ERROR"+status+" "+result.statusText)
+            }
+        });
+    }
+    //lista los niveles de acuerdo a la categoria seleccionada
     function getNiveles(categoriaNivel)
     {
         var parametros = { "CategoriaNivelId": categoriaNivel, "Estado": 1, "Orden": "ASC", "CampoOrden": "Nombre" };
@@ -82,7 +111,7 @@ $(window).load(function () {
 
         });
     }
-    //funcion para llenar el combo box
+    //funcion para llenar el combo box dde las categorias nivel   
     function getCategoriasNivel() {
         var parametros = { "Estado": 1, "Orden": "ASC", "CampoOrden": "Nombre" };
         $.ajax({
@@ -188,7 +217,7 @@ $(window).load(function () {
         var param = { 'PK': idObjeto };
         $.ajax({
             type: "POST",
-            url: "Modulo.aspx/Get",
+            url: "Curso.aspx/Get",
             data: JSON.stringify(param),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -203,25 +232,58 @@ $(window).load(function () {
                     var nombre = listado[0].Nombre;
                     var descripcion = listado[0].Descripcion;
                     var estado = listado[0].Estado;
-                    var edificio = listado[0].Edificio_Id;
+                    var codigo = listado[0].CodigoMineduc;
+                    var creditos = listado[0].Creditos;
+                    var categoria = listado[0].CategoriaCurso_Id;
+                    var nivel = listado[0].Nivel_Id;
+
+                    getCategoriaPorNivel(nivel);
 
                     $("#txtNombre").val(nombre);
                     $("#txtDescripcion").val(descripcion);
                     $("#ddlEstado").val(estado);
-                    $("#ddlEdificios").val(edificio);
+                    $("#ddlCategoriasCurso").val(categoria);
+                    $("#ddlCategoriasNivel").val(CategoriaNivel);
+                    $("#ddlNiveles").val(nivel);
+                    $("#txtCodigoMineduc").val(codigo);
+                    $("#txtCreditos").val(creditos);
                     $("#pk").val(id);
 
                     if (esGuardar == null) {
                         $("#txtNombre").attr("disabled", -1);
                         $("#txtDescripcion").attr("disabled", -1);
                         $("#ddlEstado").attr("disabled", -1);
-                        $("#ddlEdificios").attr("disabled", -1);
+                        $("#ddlCategoriasCurso").attr("disabled", -1);
+                        $("#ddlCategoriasNivel").attr("disabled", -1);
+                        $("#ddlNiveles").attr("disabled", -1);
+                        $("#txtCodigoMineduc").attr("disabled", -1);
+                        $("#txtCreditos").attr("disabled", -1);
+                        $("#txtNombre").removeClass("enfoco");
+                        $("#txtDescripcion").removeClass("enfoco");
+                        $("#ddlEstado").removeClass("enfoco");
+                        $("#ddlCategoriasCurso").removeClass("enfoco");
+                        $("#ddlCategoriasNivel").removeClass("enfoco");
+                        $("#ddlNiveles").removeClass("enfoco");
+                        $("#txtCodigoMineduc").removeClass("enfoco");
+                        $("#txtCreditos").removeClass("enfoco");
+                        $("#txtNombre").removeClass("error");
+                        $("#txtDescripcion").removeClass("error");
+                        $("#ddlEstado").removeClass("error");
+                        $("#ddlCategoriasCurso").removeClass("error");
+                        $("#ddlCategoriasNivel").removeClass("error");
+                        $("#ddlNiveles").removeClass("error");
+                        $("#txtCodigoMineduc").removeClass("error");
+                        $("#txtCreditos").removeClass("error");
                     }
                     else {
                         $("#txtNombre").removeAttr("disabled");
                         $("#txtDescripcion").removeAttr("disabled");
                         $("#ddlEstado").removeAttr("disabled");
-                        $("#ddlEdificios").removeAttr("disabled");
+                        $("#ddlCategoriasCurso").removeAttr("disabled");
+                        $("#ddlCategoriasNivel").removeAttr("disabled");
+                        $("#ddlNiveles").removeAttr("disabled");
+                        $("#txtCodigoMineduc").removeAttr("disabled");
+                        $("#txtCreditos").removeAttr("disabled");
                     }
                 }
                 else {
@@ -516,15 +578,18 @@ $(window).load(function () {
                 var nombre = $("#txtNombre").val();
                 var descripcion = $("#txtDescripcion").val();
                 var estado = $("select[id=ddlEstado]").val();
-                var edificio = $("select[id=ddlEdificios]").val();
+                var nivel = $("select[id=ddlNiveles]").val();
+                var categoriaCurso = $("select[id=ddlCategoriasCurso]").val();
+                var creditos = $("#txtCreditos").val();
+                var codigoMineduc = $("#txtCodigoMineduc").val();
                 llave = $("#pk").val();
 
                 //guardar
                 if (esGuardar == true) {
-                    Guardar(nombre, descripcion, estado, edificio);
+                    Guardar(codigoMineduc,creditos,nombre, descripcion, estado, categoriaCurso,nivel);
                     //getData((paginaActual-1)*paginacion,paginacion);
                 } else if (esGuardar == false) {//editar
-                    Guardar(nombre, descripcion, estado, edificio);
+                    Guardar(codigoMineduc,creditos, nombre, descripcion, estado, categoriaCurso,nivel);
                     //getData((paginaActual - 1) * paginacion, paginacion);
                 }
                 else if (esGuardar == null) {
@@ -595,13 +660,13 @@ $(window).load(function () {
 
     //*************************OPERACIONES CRUD*******************
     //funcion para guardar
-    function Guardar(nombre, descripcion, estado, edificio) {
-        if (validarIngreso(nombre, descripcion, estado)) {
-            var parametros = { "Pk": llave, "Nombre": nombre, "Descripcion": descripcion, "Estado": estado, "Edificio_Id": edificio, "Operacion": esGuardar };
+    function Guardar(codigoMineduc,creditos,nombre, descripcion, estado, categoriaCurso,nivel) {
+        if (validarIngreso(codigoMineduc,creditos, nombre, descripcion, estado,categoriaCurso,nivel)) {
+            var parametros = { "Pk": llave, "Nombre": nombre, "Descripcion": descripcion,"CodigoMineduc":codigoMineduc,"Creditos": creditos,"CategoriaId":categoriaCurso,"NivelId":nivel, "Estado": estado,"Operacion": esGuardar };
 
             $.ajax({
                 type: "POST",
-                url: "Modulo.aspx/Guardar",
+                url: "Curso.aspx/Guardar",
                 data: JSON.stringify(parametros),
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
@@ -623,7 +688,7 @@ $(window).load(function () {
                         getData((paginaActual - 1) * paginacion, paginacion);
                     }
                     else {
-                        alert("Por favor, verifique");
+                        mostrarMensaje(r);
                     }
                 },
                 error: function (result) {
@@ -634,7 +699,7 @@ $(window).load(function () {
     }
 
     //**********************************validaciones**************
-    function validarIngreso(nombre, descripcion, estado) {
+    function validarIngreso(codigoMineduc,creditos, nombre, descripcion, estado,categoria,nivel) {
         if (nombre == "" || nombre == null) {
             mostrarMensaje("Por favor, ingrese nombre");
             return false;

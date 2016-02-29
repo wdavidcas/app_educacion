@@ -166,11 +166,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(categoria.Codigo))
+            /*if (Validador.ValidarCaracteresEspeciales(categoria.Codigo))
             {
                 Error = "El código contiene caracteres especiales.";
                 return false;
-            }
+            }*/
 
             if (string.IsNullOrEmpty(categoria.Nombre))
             {
@@ -195,11 +195,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(categoria.Nombre))
+            /*if (Validador.ValidarCaracteresEspeciales(categoria.Nombre))
             {
                 Error = "El nombre contiene caracteres especiales.";
                 return false;
-            }
+            }*/
 
             if (categoria.Descripcion.Length > 50) 
             {
@@ -213,11 +213,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(categoria.Descripcion) && !string.IsNullOrEmpty(categoria.Descripcion))
+            /*if (Validador.ValidarCaracteresEspeciales(categoria.Descripcion) && !string.IsNullOrEmpty(categoria.Descripcion))
             {
                 Error = "La descripción contiene caracteres especiales.";
                 return false;
-            }            
+            } */           
 
             if (categoria.Estado <= 0) {
                 Error = "Estado no permitido.";

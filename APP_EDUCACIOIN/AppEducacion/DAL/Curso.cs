@@ -21,7 +21,7 @@ namespace DAL
         public int Creditos {get;set;}
         public int Nivel_Id {get;set;}
         public string NivelNombre { get; set; }
-        public int Categoriacurso_Id { get; set; }
+        public int CategoriaCurso_Id { get; set; }
         public string CategoriaCursoNombre { get; set; }
         public string Error { get; set; }
 
@@ -40,7 +40,7 @@ namespace DAL
             this.Estado = estado;
             this.Creditos=creditos;
             this.Nivel_Id=nivelId;
-            this.Categoriacurso_Id = categoriaCursoId;
+            this.CategoriaCurso_Id = categoriaCursoId;
             this.Error = string.Empty;
         }
 
@@ -60,7 +60,7 @@ namespace DAL
             this.Estado = estado;
             this.Creditos=creditos;
             this.Nivel_Id=nivelId;
-            this.Categoriacurso_Id = categoriaCursoId;
+            this.CategoriaCurso_Id = categoriaCursoId;
             this.Error = error;
         }
 
@@ -88,7 +88,7 @@ namespace DAL
             this.Creditos = creditos;
             this.Nivel_Id = nivelId;
             this.NivelNombre = NivelName;
-            this.Categoriacurso_Id = categoriaCursoId;
+            this.CategoriaCurso_Id = categoriaCursoId;
             this.CategoriaCursoNombre = categoriaCursoName;
             this.Error = string.Empty;
         }
@@ -157,13 +157,13 @@ namespace DAL
                 if (!Operacion)
                 {
                     MySqlParameter paramPk = new MySqlParameter("id", curso.PK);
-                    query = "UPDATE CURSO SET nombre=@nombre,descripcion=@descripcion,estado=@estado,creditos=@creditos,Nivel_id=@nivel,categoriaCurso_id=@categoriaCurso,user=@user WHERE id=@id";
+                    query = "UPDATE CURSO SET codigoMineduc=@codigoMineduc,nombre=@nombre,descripcion=@descripcion,estado=@estado,creditos=@creditos,Nivel_id=@nivel,categoria_id=@categoriaCurso,user=@user WHERE id=@id";
                     MySqlParameter paramId = new MySqlParameter("id", curso.PK);
                     parametros.Add(paramId);
                 }
                 else
                 {
-                    query = "INSERT INTO CURSO(nombre,descripcion,estado,creditos,Nivel_Id,categoriaCurso_id,codigoMineduc,user) VALUES(@nombre,@descripcion,@estado,@creditos,@nivel,@categoriaCurso,@codigoMineduc,@user)";
+                    query = "INSERT INTO CURSO(nombre,descripcion,estado,creditos,Nivel_Id,categoria_id,codigoMineduc,user) VALUES(@nombre,@descripcion,@estado,@creditos,@nivel,@categoriaCurso,@codigoMineduc,@user)";
                 }
                 MySqlParameter paramNombre = new MySqlParameter("nombre", Encryption.EncryptString(curso.Nombre));
                 parametros.Add(paramNombre);
@@ -173,9 +173,9 @@ namespace DAL
                 parametros.Add(paramEstado);
                 MySqlParameter paramCreditos = new MySqlParameter("creditos", curso.Creditos);
                 parametros.Add(paramCreditos);
-                MySqlParameter paramNivel = new MySqlParameter("categoriaNivel", curso.Nivel_Id);
+                MySqlParameter paramNivel = new MySqlParameter("nivel", curso.Nivel_Id);
                 parametros.Add(paramNivel);
-                MySqlParameter paramCategoriaCurso = new MySqlParameter("categoriaCurso",curso.Categoriacurso_Id);
+                MySqlParameter paramCategoriaCurso = new MySqlParameter("categoriaCurso",curso.CategoriaCurso_Id);
                 parametros.Add(paramCategoriaCurso);
                 MySqlParameter paramCodigo = new MySqlParameter("codigoMineduc", curso.CodigoMineduc);
                 parametros.Add(paramCodigo);
@@ -350,11 +350,11 @@ namespace DAL
                 ModelCurso curso;
                 ModelCredenciales credenciales = new ModelCredenciales();
                 Conexion conexion = new Conexion(credenciales);
-                listado = conexion.EjecutarSelect("SELECT id,codigoMineduc,nombre,descripcion,estado,Nivel_Id,CategoriaCurso_Id FROM CURSO WHERE id=" + PK + " AND estado<>" + (int)Estados.Tipos.Eliminado + "");
+                listado = conexion.EjecutarSelect("SELECT id,codigoMineduc,nombre,descripcion,estado,Nivel_Id,Categoria_Id,creditos FROM CURSO WHERE id=" + PK + " AND estado<>" + (int)Estados.Tipos.Eliminado + "");
 
                 foreach (DataRow fila in listado.Rows)
                 {
-                    curso = new ModelCurso(Convert.ToInt32(fila["id"].ToString()),Encryption.DecryptString(fila["CodigoMineduc"].ToString()), Encryption.DecryptString(fila["nombre"].ToString()), Encryption.DecryptString(fila["descripcion"].ToString()), Convert.ToInt32(fila["estado"]),Convert.ToInt32(fila["creditos"]),Convert.ToInt32(fila["Nivel_Id"]),Convert.ToInt32(fila["CategoriaCurso_Id"]));
+                    curso = new ModelCurso(Convert.ToInt32(fila["id"].ToString()),Encryption.DecryptString(fila["CodigoMineduc"].ToString()), Encryption.DecryptString(fila["nombre"].ToString()), Encryption.DecryptString(fila["descripcion"].ToString()), Convert.ToInt32(fila["estado"]),Convert.ToInt32(fila["creditos"]),Convert.ToInt32(fila["Nivel_Id"]),Convert.ToInt32(fila["Categoria_Id"]));
                     lista.Add(curso);
                 }
                 return lista;

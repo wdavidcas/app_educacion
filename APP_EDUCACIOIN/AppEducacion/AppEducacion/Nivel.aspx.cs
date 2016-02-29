@@ -126,19 +126,14 @@ namespace AppEducacion
             ControllerNivel edificio = new ControllerNivel();
             int cant = edificio.Count(TextoBusqueda, Estado);
             return cant;
-<<<<<<< HEAD
         }
     
-=======
-        }        
->>>>>>> 9530d7bd64783a03c5f2b69bf92d3800a36bac36
-
         [WebMethod]
         public static List<ModelCategoriaNivel> ObtenerCategoriasNivel(int Estado,string Orden,string CampoOrden) {
             ControllerCategoriaNivel categoria = new ControllerCategoriaNivel();
             return categoria.Listar(Estado, Orden, CampoOrden);
 
-        #endregion
+       
         }
         #endregion
         #region VALIDACIONES
@@ -175,11 +170,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(nivel.Codigo))
+            /*if (Validador.ValidarCaracteresEspeciales(nivel.Codigo))
             {
                 Error = "El código contiene caracteres especiales.";
                 return false;
-            }
+            }*/
 
             if (string.IsNullOrEmpty(nivel.Nombre))
             {
@@ -205,11 +200,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(nivel.Nombre))
+            /*if (Validador.ValidarCaracteresEspeciales(nivel.Nombre))
             {
                 Error = "El nombre contiene caracteres especiales.";
                 return false;
-            }
+            }*/
 
             if (nivel.Descripcion.Length > 50)
             {
@@ -223,11 +218,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(nivel.Descripcion) && !string.IsNullOrEmpty(nivel.Descripcion))
+            /*if (Validador.ValidarCaracteresEspeciales(nivel.Descripcion) && !string.IsNullOrEmpty(nivel.Descripcion))
             {
                 Error = "La descripción contiene caracteres especiales.";
                 return false;
-            }
+            }*/
 
             if (nivel.CategoriaNivel_Id < 0)
             {

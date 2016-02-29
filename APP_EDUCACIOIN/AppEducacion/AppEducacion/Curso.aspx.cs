@@ -137,7 +137,7 @@ namespace AppEducacion
                 return false;
             }
 
-            if (!Operacion && controlador.Count(modelo.Nombre.Trim().ToUpper(),modelo.Estado,modelo.Nivel_Id,modelo.Categoriacurso_Id,true) > 0)
+            if (Operacion==true && controlador.Count(modelo.Nombre.Trim().ToUpper(),modelo.Estado,modelo.Nivel_Id,modelo.CategoriaCurso_Id,true) > 0)
             {
                 Error = "Existe un curso con el mismo nombre.";
                 return false;
@@ -161,7 +161,7 @@ namespace AppEducacion
                 return false;
             }
 
-            if (!Operacion && controlador.Count(modelo.CodigoMineduc.Trim().ToUpper(), modelo.Estado, modelo.Nivel_Id, modelo.Categoriacurso_Id, false) > 0)
+            if (!Operacion && controlador.Count(modelo.CodigoMineduc.Trim().ToUpper(), modelo.Estado, modelo.Nivel_Id, modelo.CategoriaCurso_Id, false) > 0)
             {
                 Error = "Existe un código con el mismo nombre.";
                 return false;
@@ -203,7 +203,7 @@ namespace AppEducacion
                 return false;
             }
 
-            if (modelo.Categoriacurso_Id <= 0)
+            if (modelo.CategoriaCurso_Id <= 0)
             {
                 Error = "Debe seleccionar una categoría";
                 return false;

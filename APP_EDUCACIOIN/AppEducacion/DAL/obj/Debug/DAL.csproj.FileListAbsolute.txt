@@ -6,11 +6,3 @@ C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\DAL\bin\Debug\BLL.p
 C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\DAL\obj\Debug\DAL.dll
 C:\Users\ingdavid\Documents\ISEI\APP_EDUCACIOIN\AppEducacion\DAL\obj\Debug\DAL.pdb
-C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\DAL\bin\Debug\DAL.dll
-C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\DAL\bin\Debug\DAL.pdb
-C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\DAL\bin\Debug\BLL.dll
-C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\DAL\bin\Debug\MySql.Data.dll
-C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\DAL\bin\Debug\BLL.pdb
-C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
-C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\DAL\obj\Debug\DAL.dll
-C:\APP_EDUCACION\app_educacion\APP_EDUCACIOIN\AppEducacion\DAL\obj\Debug\DAL.pdb

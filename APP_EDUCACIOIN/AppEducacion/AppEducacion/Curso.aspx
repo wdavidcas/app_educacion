@@ -74,7 +74,7 @@
                     <label>Código</label>
                 </div>
                 <div class="col-md-4">
-                    <input id="txtCodigoMineduc" title="Código del curso" type="text" placeholder="Ingrese código" maxlength="25" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this); revisarObligatorio(this); revisarLongitud(this,25)"  onkeypress="Convertir(this,'may')" />
+                    <input id="txtCodigoMineduc" title="Código del curso" type="text" placeholder="Ingrese código" maxlength="25" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this); revisarObligatorio(this); revisarLongitud(this,25)"  onkeypress="convertir(this,'may')" />
                 </div>
             </div>
             <br />
