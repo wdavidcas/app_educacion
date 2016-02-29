@@ -56,6 +56,20 @@ namespace AppEducacion
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Estado"></param>
+        /// <param name="Orden"></param>
+        /// <param name="CampoOrden"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public static List<ModelNivel> ObtenerListado(int CategoriaNivelId,int Estado, string Orden, string CampoOrden)
+        {
+            ControllerNivel controlador = new ControllerNivel();
+            return controlador.Listar(CategoriaNivelId,Estado, Orden, CampoOrden);
+        }
+
+        /// <summary>
         /// Recupera la informacion de un objeto
         /// </summary>
         /// <param name="PK"> identificador</param>
@@ -112,15 +126,16 @@ namespace AppEducacion
             ControllerNivel edificio = new ControllerNivel();
             int cant = edificio.Count(TextoBusqueda, Estado);
             return cant;
-        }        
-
+        }
+    
         [WebMethod]
         public static List<ModelCategoriaNivel> ObtenerCategoriasNivel(int Estado,string Orden,string CampoOrden) {
             ControllerCategoriaNivel categoria = new ControllerCategoriaNivel();
             return categoria.Listar(Estado, Orden, CampoOrden);
 
-        #endregion
+       
         }
+        #endregion
         #region VALIDACIONES
 
         /// <summary>
@@ -155,11 +170,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(nivel.Codigo))
+            /*if (Validador.ValidarCaracteresEspeciales(nivel.Codigo))
             {
                 Error = "El código contiene caracteres especiales.";
                 return false;
-            }
+            }*/
 
             if (string.IsNullOrEmpty(nivel.Nombre))
             {
@@ -185,11 +200,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(nivel.Nombre))
+            /*if (Validador.ValidarCaracteresEspeciales(nivel.Nombre))
             {
                 Error = "El nombre contiene caracteres especiales.";
                 return false;
-            }
+            }*/
 
             if (nivel.Descripcion.Length > 50)
             {
@@ -203,11 +218,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(nivel.Descripcion) && !string.IsNullOrEmpty(nivel.Descripcion))
+            /*if (Validador.ValidarCaracteresEspeciales(nivel.Descripcion) && !string.IsNullOrEmpty(nivel.Descripcion))
             {
                 Error = "La descripción contiene caracteres especiales.";
                 return false;
-            }
+            }*/
 
             if (nivel.CategoriaNivel_Id < 0)
             {

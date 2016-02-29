@@ -364,6 +364,8 @@ namespace DAL
             }
         }
 
+        
+
         /// <summary>
         /// Metodo para buscar los nombres de la entidad similares al dado
         /// </summary>

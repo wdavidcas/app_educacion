@@ -57,6 +57,20 @@ namespace AppEducacion
         }
 
         /// <summary>
+        ///Lista los objetos del modelo 
+        /// </summary>
+        /// <param name="Estado">Estado</param>
+        /// <param name="Orden">[ASC O DESC]</param>
+        /// <param name="CampoOrden">Campo sobre el cual se ordenara la informacion</param>
+        /// <returns></returns>
+        [WebMethod]
+        public static List<ModelCategoriaNivel> ObtenerListado(int Estado, string Orden, string CampoOrden)
+        {
+            ControllerCategoriaNivel controlador = new ControllerCategoriaNivel();
+            return controlador.Listar(Estado, Orden, CampoOrden);
+        }
+
+        /// <summary>
         /// Recupera la informacion de un objeto
         /// </summary>
         /// <param name="PK"> identificador</param>
@@ -114,6 +128,9 @@ namespace AppEducacion
             int cant = categoria.Count(TextoBusqueda, Estado);
             return cant;
         }
+
+     
+
         #endregion
         
         #region VALIDACIONES
@@ -149,11 +166,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(categoria.Codigo))
+            /*if (Validador.ValidarCaracteresEspeciales(categoria.Codigo))
             {
                 Error = "El código contiene caracteres especiales.";
                 return false;
-            }
+            }*/
 
             if (string.IsNullOrEmpty(categoria.Nombre))
             {
@@ -178,11 +195,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(categoria.Nombre))
+            /*if (Validador.ValidarCaracteresEspeciales(categoria.Nombre))
             {
                 Error = "El nombre contiene caracteres especiales.";
                 return false;
-            }
+            }*/
 
             if (categoria.Descripcion.Length > 50) 
             {
@@ -196,11 +213,11 @@ namespace AppEducacion
                 return false;
             }
 
-            if (Validador.ValidarCaracteresEspeciales(categoria.Descripcion) && !string.IsNullOrEmpty(categoria.Descripcion))
+            /*if (Validador.ValidarCaracteresEspeciales(categoria.Descripcion) && !string.IsNullOrEmpty(categoria.Descripcion))
             {
                 Error = "La descripción contiene caracteres especiales.";
                 return false;
-            }            
+            } */           
 
             if (categoria.Estado <= 0) {
                 Error = "Estado no permitido.";

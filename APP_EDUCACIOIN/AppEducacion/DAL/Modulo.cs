@@ -227,11 +227,11 @@ namespace DAL
         /// </summary>
         /// <param name="nombre">nombre del objeto del modelo</param>
         /// <returns></returns>
-        public int Count(string nombre)
+        public int Count(string nombre,int edificio,int estado)
         {
             try
             {
-                string query = "SELECT COUNT(*) FROM MODULO WHERE nombre='" + Encryption.EncryptString(nombre.ToUpper()) + "'";
+                string query = "SELECT COUNT(*) FROM MODULO WHERE Edificio_id="+edificio+" AND estado="+estado+" AND nombre='" + Encryption.EncryptString(nombre.ToUpper()) + "'";
                 return conexion.EjecutarQueryCount(query);
             }
             catch (Exception ex)

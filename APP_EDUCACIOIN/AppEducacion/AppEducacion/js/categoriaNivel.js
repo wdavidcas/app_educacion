@@ -46,8 +46,7 @@ $(window).load(function () {
                 
         //generar logica para los parametros
         var param = { "inicio": filaInicial, "paginacion": cantidad, "busqueda":busqueda, "estado": estado };
-        $("#data").html("cargando");
-        //llamada ajax
+         //llamada ajax
         $.ajax({
             type: "POST",
             url: "CategoriaNivel.aspx/ObtenerListado",
@@ -365,30 +364,7 @@ $(window).load(function () {
     agregar.addEventListener("click", abrirFormularioNuevo, false);
     buscar.addEventListener("click", ejecutarBusqueda, false);
     refrescar.addEventListener("click", ejecutarRefrescar, false);
-    //guardar.addEventListener("click", accionCrud, false);
-
-    /*function accionCrud() {
-        //captura los campos para formar el objeto
-        var nombre = $("#txtNombre").val();
-        var descripcion = $("#txtDescripcion").val();
-        var estado = $("select[id=ddlEstado]").val();
-        var codigo = $("#txtCodigo").val();
-
-        llave = $("#pk").val();
-
-        //guardar
-        if (esGuardar == true) {
-            Guardar(codigo,nombre, descripcion, estado);
-            //getData((paginaActual-1)*paginacion,paginacion);
-        } else if (esGuardar == false) {//editar
-            Guardar(codigo,nombre, descripcion, estado);
-            //getData((paginaActual - 1) * paginacion, paginacion);
-        }
-        else if (esGuardar == null) {
-            $("#formulario").dialog("close");
-        }
-    }*/
-
+        
     function abrirFormularioNuevo() {
         //$('#exampleModal').modal('show');
         esGuardar = true;
@@ -589,8 +565,8 @@ $(window).load(function () {
             return false;
         }
 
-        if (verificarCaracteresEspeciales()) {
-            mostrarMensaje("No se permiten carácteres especiales en la descripción.");
+        if (verificarCaracteresEspeciales(descripcion)) {
+            mostrarMensaje("No se permiten carácteres especiales en la descripción");
             return false;
         }
 

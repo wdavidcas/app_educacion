@@ -2,7 +2,7 @@
     SCRIPT para la manipulacion del lado del cliente
 */
 
-/*
+
 
 $(window).load(function () {
     //*********************GLOBALES*************************************************
@@ -10,6 +10,7 @@ $(window).load(function () {
     var cargandoPagina = true;
     var esGuardar = false;
     var llave = 0;
+    var edificio = 0;
     //total de registros en la tabla
     var cantidadRegistros = 0;
     //registros a mostrar por pagina
@@ -39,8 +40,9 @@ $(window).load(function () {
     //realiza el conteo de los registros
     getCount();
     getData(0, paginacion);
-    //getEdificios();
-    //getModulos(0);
+    getEdificios();
+    //getModulos($("#ddlEdificios").val(0));
+    getModulos(1);
 
     //*************************PETICIONES AJAX****************************************
     function getModulos(edificioId) {
@@ -59,10 +61,10 @@ $(window).load(function () {
                 var combo = document.getElementById("ddlModulos");
                 var opcion = document.createElement("OPTION");
                 opcion.value = 0;
-                opcion.textContent = "::Seleccione opción::";
+                opcion.textContent = "::Seleccione módulo::";
                 combo.appendChild(opcion);
 
-                if (listado > 0) {
+                if (listado.length > 0) {
                     for (var i = 0; i < listado.length; i++) {
                         var opcion = document.createElement("OPTION");
                         opcion.value = listado[i].PK;
@@ -73,6 +75,34 @@ $(window).load(function () {
             },
             error: function (response) {
 
+            }
+        });
+    }
+
+    function getEdificio(modulo)
+    {
+        var parametros = { "Modulo": modulo };
+        $.ajax({
+            type: "POST",
+            url: "Edificio.aspx/GetPorModulo",
+            data: JSON.stringify(parametros),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                var listado = (typeof response.d) == 'string' ?
+                                          eval('(' + response.d + ')') :
+                                          response.d;
+
+                if (listado.length > 0)
+                {
+                    edificio = listado[0].PK;
+                }
+
+            },
+            error: function (result)
+            {
+                alert('ERROR ' + result.status + ' ' + result.statusText);
             }
         });
     }
@@ -158,9 +188,10 @@ $(window).load(function () {
                     var id = listado[0].PK;
                     var nombre = listado[0].Nombre;
                     var descripcion = listado[0].Descripcion;
-                    var estado = listado[0].Estado;
-                    var edificio = listado[0].Edificio_Id;
+                    var estado = listado[0].Estado;                    
                     var modulo = listado[0].Modulo_Id;
+                    getEdificio(modulo);
+                    
 
 
                     $("#txtNombre").val(nombre);
@@ -176,6 +207,16 @@ $(window).load(function () {
                         $("#ddlEstado").attr("disabled", -1);
                         $("#ddlEdificios").attr("disabled", -1);
                         $("#ddlModulos").attr("disabled", -1);
+                        $("#txtNombre").removeClass("enfoco");
+                        $("#txtDescripcion").removeClass("enfoco");
+                        $("#ddlEstado").removeClass("enfoco");
+                        $("#ddlEdificios").removeClass("enfoco");
+                        $("#ddlModulos").removeClass("enfoco");
+                        $("#txtNombre").removeClass("error");
+                        $("#txtDescripcion").removeClass("error");
+                        $("#ddlEstado").removeClass("error");
+                        $("#ddlEdificios").removeClass("error");
+                        $("#ddlModulos").removeClass("error");
                     }
                     else {
                         $("#txtNombre").removeAttr("disabled");
@@ -426,10 +467,16 @@ $(window).load(function () {
     var buscar = document.getElementById("btnBuscar");
     var refrescar = document.getElementById("btnRefrescar");
     var agregar = document.getElementById("btnNuevo");
+    var edificios = document.getElementById("ddlEdificios");
 
     agregar.addEventListener("click", abrirFormularioNuevo, false);
     buscar.addEventListener("click", ejecutarBusqueda, false);
     refrescar.addEventListener("click", ejecutarRefrescar, false);
+    edificios.addEventListener("onchange", desplegarModulos, false);
+
+    function desplegarModulos() {
+        getModulos($("select[id=ddlEdificios]").val());
+    }
 
     function abrirFormularioNuevo() {
         esGuardar = true;
@@ -464,7 +511,7 @@ $(window).load(function () {
     //dialogo del formulario
     $('#formulario').dialog({
         autoOpen: false,
-        height: 380,
+        height: 425,
         width: 400,
         modal: true,
         buttons: {
@@ -555,12 +602,12 @@ $(window).load(function () {
     //*************************OPERACIONES CRUD*******************
     //funcion para guardar
     function Guardar(nombre, descripcion, estado, modulo) {
-        if (validarIngreso(nombre, descripcion, estado)) {
+        if (validarIngreso(nombre, descripcion, estado,modulo)) {
             var parametros = { "Pk": llave, "Nombre": nombre, "Descripcion": descripcion, "Estado": estado, "Modulo_Id": modulo, "Operacion": esGuardar };
 
             $.ajax({
                 type: "POST",
-                url: "Modulo.aspx/Guardar",
+                url: "Aula.aspx/Guardar",
                 data: JSON.stringify(parametros),
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
@@ -586,18 +633,54 @@ $(window).load(function () {
                     }
                 },
                 error: function (result) {
-                    alert()
+                    alert(result)
                 }
             });
         }
     }
 
     //**********************************validaciones**************
-    function validarIngreso(nombre, descripcion, estado) {
+    function validarIngreso(nombre, descripcion, estado,modulo) {
         if (nombre == "" || nombre == null) {
             mostrarMensaje("Por favor, ingrese nombre");
             return false;
         }
+
+        if (verificarTamanio(nombre, 25)) {
+            mostrarMensaje("Nombre supera la longitud permitida.");
+            return false;
+        }
+
+        if (verificarPalabrasSQL(nombre)) {
+            mostrarMensaje("El nombre contiene palabras no permitidas.");
+            return false;
+        }
+
+        if (verificarCaracteresEspeciales(nombre)) {
+            mostrarMensaje("No se permiten caracteres especiales en el nombre");
+            return false;
+        }
+
+        if (verificarTamanio(descripcion, 50)) {
+            mostrarMensaje("La descripción supera la longitud permitida");
+            return false;
+        }
+
+        if (verificarPalabrasSQL(descripcion)) {
+            mostrarMensaje("La descripción incluye palabras no permitidas.");
+            return false;
+        }
+
+        if (verificarCaracteresEspeciales(descripcion)) {
+            mostrarMensaje("No se permiten carácteres especiales en la descripción.");
+            return false;
+        }
+
+        if (modulo <= 0) {
+            mostrarMensaje("Debe seleccionar un módulo.");
+            return false;
+        }
+
         if (estado <= 0) {
             mostrarMensaje("Por seleccione un estado");
             return false;
@@ -611,6 +694,6 @@ $(window).load(function () {
         $("#dialog-msj").dialog("open");
     }
 
-});*/
+});
 
 

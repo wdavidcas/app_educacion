@@ -346,6 +346,7 @@ $(window).load(function () {
 
     function abrirFormularioNuevo() {
         esGuardar = true;
+        $("#pk").val(0);
         $("#txtNombre").val("");
         $("#txtDescripcion").val("");
         $("#ddlEstado").val(0);
@@ -487,6 +488,7 @@ $(window).load(function () {
                         //alert("Informaci&oacute;n editada correctamente");
                         $("#dialog-editar").dialog("open");
                         $("#formulario").dialog("close");
+                        $("#pk").val(0);
                         getCount();
                         getData((paginaActual - 1) * paginacion, paginacion);
                     }
@@ -505,9 +507,35 @@ $(window).load(function () {
     function validarIngreso(nombre,descripcion,estado)
     {
         if (nombre == "" || nombre == null) {
-            mostrarMensaje("Por favor, ingrese nombre");            
+            mostrarMensaje("Por favor, ingrese nombre");
             return false;
         }
+
+        if (verificarPalabrasSQL(nombre)) {
+            mostrarMensaje("El nombre incluye palabras no permitidas");
+            return false;
+        }
+
+        if (verificarCaracteresEspeciales(nombre)) {
+            mostrarMensaje("No se permiten carácteres especiales en el nombre");
+            return false;
+        }
+
+        if (verificarCaracteresEspeciales(descripcion)) {
+            mostrarMensaje("No se permiten carácteres especiales en la descripción");
+            return false;
+        }
+
+        if (verificarTamanio(nombre, 25)) {
+            mostrarMensaje("Nombre supera la longitud permitida");
+            return false;
+        }
+
+        if (verificarTamanio(descripcion, 50)) {
+            mostrarMensaje("Descripción supera la longitud permitida");
+            return false;
+        }
+
         if (estado <= 0) {
             mostrarMensaje("Por seleccione un estado");
             return false;

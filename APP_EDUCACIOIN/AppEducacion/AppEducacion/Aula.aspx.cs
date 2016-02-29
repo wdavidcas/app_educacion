@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using DAL;
+using BLL;
 
 namespace AppEducacion
 {
@@ -91,12 +92,12 @@ namespace AppEducacion
         {
             ModelAula miAula = new ModelAula(Pk, Nombre, Descripcion, Estado, Modulo_Id);
             ControllerAula aula = new ControllerAula();
-            if (validarCategoriaNivel(miAula, Operacion))
+            if (ValidarModelo(miAula, Operacion))
             {
                 return aula.Insertar(miAula, Operacion);
             }
             else
-                return aula.Error;
+                return Error;
         }
 
         /// <summary>
@@ -134,14 +135,65 @@ namespace AppEducacion
         /// </summary>
         /// <param name="categoria"></param>
         /// <returns></returns>
-        static bool validarCategoriaNivel(ModelAula nivel, bool Operacion)
+        static bool ValidarModelo(ModelAula aula, bool Operacion)
         {
-            if (string.IsNullOrEmpty(nivel.Nombre))
+            ControllerAula controlador = new ControllerAula();
+
+            if (string.IsNullOrEmpty(aula.Nombre))
             {
-                Error = "Nombre vacío";
+                Error = "Por favor, ingrese nombre del aula.";
                 return false;
             }
-            if (nivel.Estado <= 0)
+
+            if (aula.Nombre.Trim().Length > 50)
+            {
+                Error = "El nombre supera la longitud permitida.";
+                return false;
+            }
+
+            if ((Operacion==false) && (controlador.Count(aula.Nombre, aula.Estado, aula.Modulo_Id)>0))
+            {
+                Error = "Existe un aula con el mismo nombre en el módulo y estado seleccionado.";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(aula.Nombre.Trim()))
+            {
+                Error = "El nombre incluye palabras no permitidas.";
+                return false;
+            }
+
+            /*if (Validador.VerificarCaracteresEspeciales(edificio.Nombre.Trim()))
+            {
+                Error = "No se permiten carácteres especiales en el nombre";
+                return false;
+            }*/
+
+            if (aula.Descripcion.Trim().Length > 50)
+            {
+                Error = "La descripción supera la longitud permitida";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(aula.Descripcion.Trim()))
+            {
+                Error = "La descripción incluye palabras no permitidas.";
+                return false;
+            }
+
+            /*if(Validador.VerificarCaracteresEspeciales(edificio.Descripcion.Trim()))
+            {
+                Error = "No se permiten caracteres especiales en la descripción.";
+                return false;
+            }*/
+
+            if (aula.Modulo_Id < 0)
+            {
+                Error = "Debe seleccionar un módulo.";
+                return false;
+            }
+
+            if (aula.Estado <= 0)
             {
                 Error = "Estado no permitido";
                 return false;

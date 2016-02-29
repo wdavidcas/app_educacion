@@ -221,6 +221,27 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nombre"></param>
+        /// <param name="estado"></param>
+        /// <param name="modulo"></param>
+        /// <returns></returns>
+        public int Count(string nombre, int estado,int modulo)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM aula WHERE nombre='"+nombre.ToUpper()+"' AND Modulo_id="+modulo+" AND estado=" + estado + " AND estado<>" + (int)Estados.Tipos.Eliminado + "";
+                return conexion.EjecutarQueryCount(query);             
+            }
+            catch (Exception ex)
+            {
+                this.Error = ex.Message.ToString();
+                return 0;
+            }
+        }
+
         #endregion
 
         #region LIST
@@ -236,7 +257,7 @@ namespace DAL
                 ModelAula aula;
                 listado.Clear();
                 listado = conexion.EjecutarSelect(@"SELECT a.id,a.nombre,a.descripcion,a.estado,a.modulo_id,m.Nombre as ModuloNombre,m.Descripcion as ModuloDescripcion 
-                INNER JOIN Modulo m ON m.id=a.Modulo_Id FROM aula a WHERE a.estado=" + estado + " AND a.estado<>" + (int)Estados.Tipos.Eliminado + " ORDER BY a.nombre ASC limit " + inicio + "," + paginacion + " ");
+                FROM aula a INNER JOIN Modulo m ON m.id=a.Modulo_Id WHERE a.estado=" + estado + " AND a.estado<>" + (int)Estados.Tipos.Eliminado + " ORDER BY a.nombre ASC limit " + inicio + "," + paginacion + " ");
 
                 foreach (DataRow fila in listado.Rows)
                 {
