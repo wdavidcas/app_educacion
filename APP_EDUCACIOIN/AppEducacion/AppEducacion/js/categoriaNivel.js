@@ -45,7 +45,7 @@ $(window).load(function () {
         var estado = $("select[id=ddlEstados]").val();
                 
         //generar logica para los parametros
-        var param = { "inicio": filaInicial, "paginacion": cantidad, "busqueda":busqueda, "estado": estado };
+        var param = { "inicio": filaInicial, "paginacion": cantidad, "busqueda": busqueda, "estado": estado };
          //llamada ajax
         $.ajax({
             type: "POST",

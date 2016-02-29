@@ -503,9 +503,40 @@ $(window).load(function () {
     //**********************************validaciones**************
     function validarIngreso(nombre, descripcion, estado) {
         if (nombre == "" || nombre == null) {
-            mostrarMensaje("Por favor, ingrese nombre");
+            mostrarMensaje("Por favor, ingrese nombre.");
             return false;
         }
+
+        if (verificarTamanio(nombre, 15)) {
+            mostrarMensaje("Nombre supera la longitud permitida");
+            return false;
+        }
+
+        if (verificarPalabrasSQL(nombre)) {
+            mostrarMensaje("El nombre incluye palabras no permitidas.");
+            return false;
+        }
+
+        if (verificarCaracteresEspeciales(nombre)) {
+            mostrarMensaje("No se permiten carácteres especiales en el nombre.");
+            return false;
+        }
+
+        if (verificarTamanio(descripcion, 50)) {
+            mostrarMensaje("La descripción supera la longitud permitida");
+            return false;
+        }
+
+        if (verificarPalabrasSQL(descripcion)) {
+            mostrarMensaje("La descripción incluye palabras no permitidas.");
+            return false;
+        }
+
+        if (verificarCaracteresEspeciales(descripcion)) {
+            mostrarMensaje("No se permiten carácteres especiales en la descripción.");
+            return false;
+        }
+
         if (estado <= 0) {
             mostrarMensaje("Por seleccione un estado");
             return false;

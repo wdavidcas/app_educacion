@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using DAL;
+using BLL;
 
 namespace AppEducacion
 {
@@ -124,18 +125,62 @@ namespace AppEducacion
         /// <returns></returns>
         static bool validarModelo(ModelParentesco modelo, bool Operacion)
         {
+            ControllerParentesco controlador = new ControllerParentesco();
+
             if (string.IsNullOrEmpty(modelo.Nombre))
             {
-                Error = "Nombre vacío";
+                Error = "Por favor, ingrese nombre del edificio.";
                 return false;
             }
+
+            if (modelo.Nombre.Trim().Length > 15) 
+            {
+                Error="El nombre supera la longitud permitida.";
+                return false;
+            }
+
+            if (Operacion==true && controlador.Count(modelo.Nombre.Trim().ToUpper()) > 0) 
+            {
+                Error = "Existe un edificio con el mismo nombre.";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(modelo.Nombre.Trim())) 
+            {
+                Error = "El nombre incluye palabras no permitidas.";
+                return false;
+            }
+
+            /*if (Validador.VerificarCaracteresEspeciales(edificio.Nombre.Trim()))
+            {
+                Error = "No se permiten carácteres especiales en el nombre";
+                return false;
+            }*/
+
+            if (modelo.Descripcion.Trim().Length > 50) {
+                Error = "La descripción supera la longitud permitida";
+                return false;
+            }
+
+            if (Validador.ValidarPalabrasReservadasSQL(modelo.Descripcion.Trim()))
+            {
+                Error = "La descripción incluye palabras no permitidas.";
+                return false;
+            }
+
+            /*if(Validador.VerificarCaracteresEspeciales(edificio.Descripcion.Trim()))
+            {
+                Error = "No se permiten caracteres especiales en la descripción.";
+                return false;
+            }*/
+
             if (modelo.Estado <= 0)
             {
                 Error = "Estado no permitido";
                 return false;
             }
             return true;
-        }
+        }        
 
         #endregion
     }
