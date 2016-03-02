@@ -198,6 +198,26 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// retorna la cantidad de registros encontrados en el query de listado
+        /// </summary>
+        /// <param name="busqueda">filtro de búsqueda</param>
+        /// <param name="estado">estado</param>
+        /// <returns></returns>
+        public int Count(string busqueda)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM TIPOTELEFONO WHERE nombre='" + busqueda + "' AND estado<>" + (int)Estados.Tipos.Eliminado + "";
+                return conexion.EjecutarQueryCount(query);                
+            }
+            catch (Exception ex)
+            {
+                this.Error = ex.Message.ToString();
+                return 0;
+            }
+        }
+
         #endregion
 
         #region LIST
