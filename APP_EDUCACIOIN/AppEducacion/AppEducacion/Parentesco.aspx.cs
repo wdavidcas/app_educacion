@@ -121,7 +121,7 @@ namespace AppEducacion
         /// <summary>
         /// valida los campos del objeto del modelo
         /// </summary>
-        /// <param name="categoria"></param>
+        /// <param name="modelo"></param>
         /// <returns></returns>
         static bool validarModelo(ModelParentesco modelo, bool Operacion)
         {
@@ -129,7 +129,7 @@ namespace AppEducacion
 
             if (string.IsNullOrEmpty(modelo.Nombre))
             {
-                Error = "Por favor, ingrese nombre del edificio.";
+                Error = "Por favor, ingrese nombre.";
                 return false;
             }
 
@@ -141,7 +141,7 @@ namespace AppEducacion
 
             if (Operacion==true && controlador.Count(modelo.Nombre.Trim().ToUpper()) > 0) 
             {
-                Error = "Existe un edificio con el mismo nombre.";
+                Error = "Existe un registro con el mismo nombre.";
                 return false;
             }
 

@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <label>Busqueda</label>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                        <input type="text" id="txtBusqueda" placeholder="Ingresar texto a buscar" maxlength="100" style="width:400px" />
+                        <input title="Texto a buscar" type="text" id="txtBusqueda" placeholder="Ingresar texto a buscar" maxlength="100" style="width:400px" onkeydown="convertir(this,'may')" onkeypress="convertir(this,'may')" onkeyup="convertir(this,'may')"/>
                         <label id="lblTipo">Tipo</label>
                 <select id="ddlTiposBusquedas">
                     <option value="0">::Seleccione Tipo::</option>
@@ -72,7 +72,7 @@
                     <label>Nombre</label>
                 </div>
                 <div class="col-md-4">
-                    <input id="txtNombre" type="text" placeholder="Ingrese nombre" maxlength="15" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this); revisarObligatorio(this); revisarLongitud(this,15)" />
+                    <input  title="Ingrese nombre" id="txtNombre" type="text" placeholder="Ingrese nombre" maxlength="15" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this); revisarObligatorio(this); revisarLongitud(this,15)" onkeydown="convertir(this,'may')" onkeypress="convertir(this,'may')" onkeyup="convertir(this,'may')"/>
                 </div>
             </div>
             <br />
@@ -82,7 +82,7 @@
                     <label>Descripci&oacute;n</label>
                 </div>
                 <div class="col-md-4">
-                    <textarea id="txtDescripcion" rows="4" placeholder="Ingrese descripci&oacute;n" maxlength="50" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this);revisarLongitud(this,50)"></textarea>
+                    <textarea title="Ingrese descripción" id="txtDescripcion" rows="4" placeholder="Ingrese descripci&oacute;n" maxlength="50" onfocus="entroEnFoco(this)" onblur="salioDeFoco(this);revisarLongitud(this,50)" onkeydown="convertir(this,'may')" onkeypress="convertir(this,'may')" onkeyup="convertir(this,'may')"></textarea>
                 </div>
             </div>
             <br />
